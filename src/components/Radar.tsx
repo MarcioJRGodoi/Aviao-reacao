@@ -81,11 +81,6 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
   const fixX = (x: number) => x * 60 + 299 - 15;
   const fixY = (y: number) => y * -60 + 299 - 15;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    console.log("useEffect");
-  }, [positionPlane]);
-
   return (
     <RadarContainer isInitial={isInitial}>
       <div style={{ width: "600px", height: "600px", position: "relative" }}>

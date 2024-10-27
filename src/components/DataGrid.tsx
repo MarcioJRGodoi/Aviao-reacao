@@ -1,40 +1,52 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { PositionPlanesService } from '../services/positionPlanesService';
 import { toast } from 'react-toastify';
 import type { Plane } from '../interfaces';
+import type { PositionPlanesService } from '../services/positionPlanesService';
 
-const DataGrid: React.FC = () => {
+
+interface DataGridProps {
+  positionPlane: PositionPlanesService;
+}
+
+const DataGrid: React.FC<DataGridProps> = ({positionPlane}) => {
   const [planes, setPlanes] = useState<Plane[]>([]);
   const [_selectedPlanes, _setSelectedPlanes] = useState<Plane[]>([]);
-  const positionPlanes = new PositionPlanesService();
+
+  useEffect(() => {
+    const handleChange = () => {
+      setPlanes([...positionPlane.getPlanes()]);
+    };
+  
+    // Assina as mudanças no PositionPlanesService
+    positionPlane.subscribeOnChange(handleChange);
+  
+    // Limpa a assinatura ao desmontar o componente
+    return () => {
+      positionPlane.subscribeOnChange(handleChange);
+    };
+  }, [positionPlane]);
 
   useEffect(() => {
     fetchPlanes();
   }, []);
 
   const fetchPlanes = () => {
-    const planesData = positionPlanes.getPlanes();
+    const planesData = positionPlane.getPlanes();
     setPlanes(planesData);
   };
 
   const checkPlane = (plane: Plane) => {
-    return positionPlanes.checkIsSelected(plane);
+    return positionPlane.checkIsSelected(plane);
   };
 
   const selectPlane = (plane: Plane) => {
-    positionPlanes.selectPlane(plane);
+    positionPlane.selectPlane(plane);
     fetchPlanes();
   };
 
   const unselectPlane = (plane: Plane) => {
-    positionPlanes.unselectPlane(plane);
-    fetchPlanes();
-  };
-
-  const deletePlane = (plane: Plane) => {
-    positionPlanes.deletePlane(plane);
-    toast.success('Avião Excluído', { position: 'top-right' });
+    positionPlane.unselectPlane(plane);
     fetchPlanes();
   };
 
@@ -85,7 +97,8 @@ const DataGrid: React.FC = () => {
               <img
                 onClick={(e) => {
                   e.stopPropagation();
-                  deletePlane(plane);
+                  positionPlane.deletePlane(plane);
+                  fetchPlanes();
                 }}
                 className="mx-auto"
                 src="/path/to/trash.png"

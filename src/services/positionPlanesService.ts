@@ -59,6 +59,7 @@ public addPlane(plane: Plane): void {
     if (planeToRemoveIndex !== -1) {
       this.planes.splice(planeToRemoveIndex, 1);
       toast.success('Avião removido com sucesso!', { position: "top-right" });
+      this.notifyChange(); // Notifica a mudança
     } else {
       toast.error('Avião não encontrado!', { position: "top-right" });
     }

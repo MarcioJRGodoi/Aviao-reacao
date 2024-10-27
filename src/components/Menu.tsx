@@ -48,7 +48,7 @@ const Menu: React.FC = () => {
         </div>
         <div className="row-span-2 col-span-6">
           <h1 className="text-white font-bold text-center text-md">DataGrid</h1>
-          <DataGrid />
+          <DataGrid  positionPlane={positionPlanes}/>
         </div>
         <div className="row-span-3 col-span-6">
           <h1 className="text-white font-bold text-center text-md mt-8">Relatório</h1>
