@@ -17,9 +17,9 @@ const Menu: React.FC = () => {
     setState((prevState) => (prevState === 'initial' ? 'final' : 'initial'));
   };
 
-          const positionPlanes = new PositionPlanesService();
+  const positionPlanes = new PositionPlanesService();
 
-        const logicService = new LogicService();
+  const logicService = new LogicService();
 
   return (
     <div className="bg-gray-900 h-screen">
@@ -44,7 +44,7 @@ const Menu: React.FC = () => {
           />
           {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
           <div className="w-10 h-2 bg-gray-400 mx-auto"></div>
-          <Radar  positionPlane={positionPlanes}/>
+          <Radar positionPlane={positionPlanes} />
         </div>
         <div className="row-span-2 col-span-6">
           <h1 className="text-white font-bold text-center text-md">DataGrid</h1>

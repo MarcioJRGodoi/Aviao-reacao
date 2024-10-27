@@ -12,14 +12,33 @@ export class PositionPlanesService {
     return this.planes;
   }
 
-  public addPlane(plane: Plane): void {
-    if (!this.isValidPlane(plane)) return;
+  private onChangeCallbacks: (() => void)[] = [];
 
-    plane.id = this.planes.length + 1;
-    console.log(this.planes);
-    this.planes.push(plane);
-    toast.success('Avião adicionado com sucesso!', { position: "top-right" });
-  }
+public subscribeOnChange(callback: () => void): void {
+  this.onChangeCallbacks.push(callback);
+}
+
+public notifyChange(): void {
+  // biome-ignore lint/complexity/noForEach: <explanation>
+  this.onChangeCallbacks.forEach((callback) => callback());
+}
+
+public addPlane(plane: Plane): void {
+  if (!this.isValidPlane(plane)) return;
+  plane.id = this.planes.length + 1;
+  this.planes.push(plane);
+  this.notifyChange(); // Notifica a mudança
+  toast.success('Avião adicionado com sucesso!', { position: "top-right" });
+}
+
+  // public addPlane(plane: Plane): void {
+  //   if (!this.isValidPlane(plane)) return;
+
+  //   plane.id = this.planes.length + 1;
+  //   console.log(this.planes);
+  //   this.planes.push(plane);
+  //   toast.success('Avião adicionado com sucesso!', { position: "top-right" });
+  // }
 
   public editPlane(newPlane: Plane): void {
     const planeToEditIndex = this.planes.findIndex((plane) => plane.id === newPlane.id);
