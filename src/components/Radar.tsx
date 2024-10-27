@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import type { PositionPlanesService } from '../services/positionPlanesService';
 
 // Animação de ping e estilo tail
 // const _ping = keyframes`
@@ -9,7 +10,7 @@ import styled from 'styled-components';
 //   100% { opacity: 0; }
 // `;
 
-// const _Tail = styled.div`
+// const Tail = styled.div`
 //   box-shadow: -15px 0px 50px 5px #4299e1;
 //   border-radius: 10px;
 // `;
@@ -59,12 +60,12 @@ interface PlaneProps {
 }
 
 // Função do Radar
-const Radar: React.FC = () => {
+interface RadarProps {
+  positionPlane: PositionPlanesService;
+}
+
+const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
   const [isInitial, setIsInitial] = useState(true);
-  const [planes, _setPlanes] = useState<PlaneProps[]>([
-    { x: 100, y: 150, direction: 45, color: '#fff' },
-    { x: 300, y: 250, direction: 90, color: '#ff0' },
-  ]);
 
   const fixX = (x: number) => x; // ajuste do eixo X
   const fixY = (y: number) => y; // ajuste do eixo Y
@@ -89,7 +90,7 @@ const Radar: React.FC = () => {
 
         <RadarCenter />
 
-        {planes.map((plane, index) => (
+        {positionPlane.getPlanes().map((plane, index) => (
           // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
 <div
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>

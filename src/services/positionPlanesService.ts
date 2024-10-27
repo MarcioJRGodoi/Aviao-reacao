@@ -16,6 +16,7 @@ export class PositionPlanesService {
     if (!this.isValidPlane(plane)) return;
 
     plane.id = this.planes.length + 1;
+    console.log(this.planes);
     this.planes.push(plane);
     toast.success('Avião adicionado com sucesso!', { position: "top-right" });
   }

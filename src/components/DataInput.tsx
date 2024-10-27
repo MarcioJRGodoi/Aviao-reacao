@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useState } from 'react';
 import { toast } from 'react-toastify'; // Se você estiver usando alguma biblioteca de notificações similar
+import type { PositionPlanesService } from '../services/positionPlanesService';
 
 // Função de serviço simulada para conversão e adição ao radar
 const polarToCartesian = (radius: number, angle: number) => {
@@ -8,7 +9,11 @@ const polarToCartesian = (radius: number, angle: number) => {
   return [radius * Math.cos(rad), radius * Math.sin(rad)];
 };
 
-const DataInput: React.FC = () => {
+interface DataInputProps {
+  radar: PositionPlanesService;
+}
+
+const DataInput: React.FC<DataInputProps> = ({ radar }) => {
   const [x, setX] = useState<number | null>(null);
   const [y, setY] = useState<number | null>(null);
   const [radius, setRadius] = useState<number | null>(null);
@@ -32,20 +37,20 @@ const DataInput: React.FC = () => {
       toastr.error('Por favor, preencha todos os campos necessários.');
       return;
     }
-
+  
     const plane = {
       id: Date.now(),
-      x,
-      y,
-      radius,
-      angle,
-      velocity,
-      direction: direction % 360, // Ajuste para manter o ângulo entre 0 e 360
+      x: x ?? 0,
+      y: y ?? 0,
+      radius: radius ?? 0,
+      angle: angle ?? 0,
+      velocity: velocity ?? 0,
+      direction: direction % 360,  // Ajuste para manter a direção entre 0 e 360
       color: getRandomColor(),
     };
-
-    // Aqui você adicionaria o avião ao radar (substitua `console.log` pela função de serviço)
-    console.log("Avião inserido:", plane);
+  
+    radar.addPlane(plane); // Supondo que radar seja o serviço equivalente
+  
     toastr.success("Avião inserido com sucesso!");
     clearFields();
   };
