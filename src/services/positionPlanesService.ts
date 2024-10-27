@@ -108,6 +108,8 @@ public addPlane(plane: Plane): void {
   public addTracking({tracking}: {tracking: Tracking[]}): void {
     this.tracking.push(...tracking); // Para acumular rastreamentos
     console.log(this.tracking);
+    this.notifyChange(); // Notifica a mudança
+
   }
 
   public getTracking(): Tracking[] {

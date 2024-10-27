@@ -41,20 +41,14 @@ const RadarCenter = styled.div`
   left: 295px;
 `;
 
-interface PlaneProps {
-  x: number;
-  y: number;
-  direction: number;
-  color: string;
-}
 
 interface RadarProps {
   positionPlane: PositionPlanesService;
 }
 
 const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
-  const [isInitial, setIsInitial] = useState(true);
-  const [planes, setPlanes] = useState<Plane[]>(positionPlane.getPlanes());
+  const [isInitial, _setIsInitial] = useState(true);
+  const [_planes, setPlanes] = useState<Plane[]>(positionPlane.getPlanes());
 
   useEffect(() => {
     const handleChange = () => {

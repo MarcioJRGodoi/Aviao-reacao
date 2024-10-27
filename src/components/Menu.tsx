@@ -34,7 +34,7 @@ const Menu: React.FC = () => {
         </div>
         <div className="row-span-1 col-span-12">
           <h1 className="text-white font-bold text-center text-md mt-8">Funções de Rastreamento</h1>
-          <TrackingFunction />
+          <TrackingFunction logic={logicService} positionPlanes={positionPlanes} />
         </div>
         <div className="row-span-4 col-span-6">
           {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
@@ -52,7 +52,7 @@ const Menu: React.FC = () => {
         </div>
         <div className="row-span-3 col-span-6">
           <h1 className="text-white font-bold text-center text-md mt-8">Relatório</h1>
-          <Report PositionPlanes={positionPlanes} />
+          <Report positionPlane={positionPlanes} />
         </div>
       </div>
     </div>

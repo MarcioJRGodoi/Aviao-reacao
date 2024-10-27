@@ -1,12 +1,17 @@
 import type React from "react";
 import { useState } from "react";
-import { PositionPlanesService } from "../services/positionPlanesService";
-import { LogicService } from "../services/logicService";
+import type { LogicService } from "../services/logicService";
+import type { PositionPlanesService } from "../services/positionPlanesService";
 
-const positionPlanesService = new PositionPlanesService();
-const logicService = new LogicService();
+interface TransformationFunctionProps {
+	positionPlanes: PositionPlanesService;
+	logic: LogicService;
+}
 
-const TrackingFunctionComponent: React.FC = () => {
+const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
+	logic,
+	positionPlanes,
+}) => {
 	const [distanAirport, setDistanAirport] = useState<number | null>(null);
 	const [distanNearly, setDistanNearly] = useState<number | null>(null);
 	const [timeToColision, setTimeToColision] = useState<number | null>(null);
@@ -16,32 +21,33 @@ const TrackingFunctionComponent: React.FC = () => {
 	const handleAirpotDistance = () => {
 		if (distanAirport === null) return;
 
-		const distances = logicService.planesClosestToAirport(
+		const distances = logic.planesClosestToAirport(
 			airport,
-			positionPlanesService.getPlanes(),
+			positionPlanes.getPlanes(),
 			distanAirport,
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		) as any
+			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+		) as any;
 
-		positionPlanesService.addTracking(distances);
+		console.log(distances);
+		positionPlanes.addTracking({tracking: distances});
 		setDistanAirport(null);
 	};
 
 	const handleNearlyPlanes = () => {
 		if (distanNearly === null) return;
 
-		const distances = logicService.planesClosestToPlanes(
-			positionPlanesService.getPlanes(),
+		const distances = logic.planesClosestToPlanes(
+			positionPlanes.getPlanes(),
 			distanNearly,
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 		) as any;
 
-		positionPlanesService.addTracking(distances);
+		positionPlanes.addTracking(distances);
 		setDistanNearly(null);
 	};
 
 	const handleColisionTime = () => {
-		const selectedPlanes = positionPlanesService.getSelectedPlanes();
+		const selectedPlanes = positionPlanes.getSelectedPlanes();
 
 		if (selectedPlanes.length < 2 || !timeToColision) {
 			alert(
@@ -50,14 +56,14 @@ const TrackingFunctionComponent: React.FC = () => {
 			return;
 		}
 
-		const distances = logicService.planesInCollisionRoute({
+		const distances = logic.planesInCollisionRoute({
 			minimumTime: timeToColision,
 			planes: selectedPlanes,
 		});
 
-		positionPlanesService.addTracking({tracking: distances});
+		positionPlanes.addTracking({ tracking: distances });
 		setTimeToColision(null);
-		positionPlanesService.clearSelectedPlanes();
+		positionPlanes.clearSelectedPlanes();
 	};
 
 	return (

@@ -1,18 +1,33 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
 import type { Plane, Tracking } from '../interfaces';
+import type { PositionPlanesService } from '../services/positionPlanesService';
 
 
-interface PositionPlanesService {
-  getTracking: () => Tracking[];
+interface RadarProps {
+  positionPlane: PositionPlanesService;
 }
 
-const ReportComponent: React.FC<{ PositionPlanes: PositionPlanesService }> = ({ PositionPlanes }) => {
+const ReportComponent: React.FC<RadarProps> = ({ positionPlane }) => {
   const [trackingData, setTrackingData] = useState<Tracking[]>([]);
+  const [_planes, setPlanes] = useState<Plane[]>(positionPlane.getPlanes());
+
 
   useEffect(() => {
-    setTrackingData(PositionPlanes.getTracking());
-  }, [PositionPlanes]);
+    setTrackingData(positionPlane.getTracking());
+  }, [positionPlane]);
+
+  useEffect(() => {
+    const handleChange = () => {
+      setPlanes([...positionPlane.getPlanes()]);
+    };
+    positionPlane.subscribeOnChange(handleChange);
+
+    return () => {
+      // Clean up the subscription
+      positionPlane.subscribeOnChange(handleChange);
+    };
+  }, [positionPlane]);
 
   const isArray = (planes: Plane | Plane[]): planes is Plane[] => {
     return Array.isArray(planes) && planes.length > 1;
