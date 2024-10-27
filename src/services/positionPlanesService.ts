@@ -48,10 +48,12 @@ public addPlane(plane: Plane): void {
     } else {
       toast.error('Avião não encontrado!', { position: "top-right" });
     }
+    this.notifyChange(); // Notifica a mudança
   }
 
   public selectPlane(plane: Plane): void {
     this.selectedPlanes.push(plane);
+    this.notifyChange(); // Notifica a mudança
   }
 
   public deletePlane(planeToDelete: Plane): void {
@@ -59,10 +61,10 @@ public addPlane(plane: Plane): void {
     if (planeToRemoveIndex !== -1) {
       this.planes.splice(planeToRemoveIndex, 1);
       toast.success('Avião removido com sucesso!', { position: "top-right" });
-      this.notifyChange(); // Notifica a mudança
     } else {
       toast.error('Avião não encontrado!', { position: "top-right" });
     }
+    this.notifyChange(); // Notifica a mudança
   }
 
   public unselectPlane(planeToUnSelect: Plane): void {
@@ -71,6 +73,7 @@ public addPlane(plane: Plane): void {
       this.selectedPlanes.splice(planeToUnSelectIndex, 1);
       toast.success('Avião desmarcado com sucesso!', { position: "top-right" });
     }
+    this.notifyChange(); // Notifica a mudança
   }
 
   public getSelectedPlanes(): Plane[] {

@@ -51,7 +51,6 @@ const DataInput: React.FC<DataInputProps> = ({ radar }) => {
   
     radar.addPlane(plane); // Supondo que radar seja o serviço equivalente
   
-    toastr.success("Avião inserido com sucesso!");
     clearFields();
   };
 
