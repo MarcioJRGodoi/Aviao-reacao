@@ -1,11 +1,11 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
   font-weight: 400;
-
+  
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #121212; /* Cor de fundo mais escura para maior contraste */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,24 +15,33 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  color: #4f9cff; /* Azul mais vibrante para links */
+  text-decoration: none; /* Remove o sublinhado padrão */
+  transition: color 0.3s; /* Transição suave ao passar o mouse */
 }
+
 a:hover {
-  color: #535bf2;
+  color: #3380e6; /* Cor do link ao passar o mouse */
 }
 
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  flex-direction: column; /* Flexbox para melhor alinhamento */
+  align-items: center; /* Centraliza o conteúdo */
+  justify-content: center; /* Centraliza verticalmente */
   min-width: 320px;
   min-height: 100vh;
+  background-color: #1a1a1a; /* Cor de fundo do corpo */
+  color: #eaeaea; /* Cor do texto principal */
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  color: #f0f0f0; /* Cor do título */
+  margin-bottom: 0.5em; /* Espaçamento abaixo do título */
+  text-align: center; /* Centraliza o texto */
 }
 
 button {
@@ -42,34 +51,39 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #333333; /* Cor de fundo do botão */
+  color: #f0f0f0; /* Cor do texto do botão */
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.3s, border-color 0.3s; /* Transições suaves */
 }
+
 button:hover {
-  border-color: #646cff;
+  background-color: #646cff; /* Cor de fundo ao passar o mouse */
+  border-color: #646cff; /* Cor da borda ao passar o mouse */
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-
-/* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
+  a {
+    color: #2b7bff; /* Azul claro para links no modo claro */
+  }
   a:hover {
-    color: #747bff;
+    color: #0056b3; /* Cor do link ao passar o mouse no modo claro */
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #f9f9f9; /* Cor de fundo do botão no modo claro */
+    color: #333; /* Cor do texto do botão no modo claro */
   }
 }

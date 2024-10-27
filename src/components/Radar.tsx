@@ -5,26 +5,28 @@ import type { PositionPlanesService } from "../services/positionPlanesService";
 import type { Plane } from "../interfaces";
 
 const RadarContainer = styled.div<{ isInitial: boolean }>`
-  border: 8px solid gray;
-  border-radius: ${(props) => (props.isInitial ? "605px" : "0px")};
-  background-color: #008500;
+  border: 8px solid #4A4A4A;
+  border-radius: ${(props) => (props.isInitial ? "50%" : "0px")};
+  background-color: #007b5f; /* cor de fundo verde */
   width: 605px;
   height: 605px;
   position: relative;
   z-index: 999999999;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   transition: border-radius 1s;
 `;
 
 const GridCell = styled.div`
   width: 60px;
   height: 60px;
-  border: 1px solid black;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* borda mais suave */
+  background-color: rgba(255, 255, 255, 0.1); /* fundo mais suave */
   opacity: 0.25;
 `;
 
 const Line = styled.div<{ vertical?: boolean }>`
   position: absolute;
-  background-color: black;
+  background-color: white; /* linha branca */
   ${(props) =>
     props.vertical
       ? "width: 2px; height: 600px; left: 299px;"
@@ -32,13 +34,14 @@ const Line = styled.div<{ vertical?: boolean }>`
 `;
 
 const RadarCenter = styled.div`
-  width: 10px;
-  height: 10px;
+  width: 12px; /* um pouco maior para destaque */
+  height: 12px;
   border-radius: 50%;
-  background-color: #b91c1c;
+  background-color: #f44336; /* vermelho mais chamativo */
   position: absolute;
   top: 295px;
   left: 295px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 `;
 
 interface PlaneProps {
@@ -68,9 +71,7 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
     };
   }, [positionPlane]);
 
-
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const selectPlane = (plane: any) => {
+  const selectPlane = (plane: Plane) => {
     if (positionPlane.checkIsSelected(plane)) {
       positionPlane.unselectPlane(plane);
     } else {
@@ -83,14 +84,8 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
 
   return (
     <RadarContainer isInitial={isInitial}>
-      <div style={{ width: "600px", height: "600px", position: "relative" }}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(10, 60px)",
-            width: "600px",
-          }}
-        >
+      <div className="relative w-[600px] h-[600px]">
+        <div className="grid grid-cols-10 gap-0">
           {Array.from({ length: 100 }).map((_, index) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             <GridCell key={index} />
@@ -108,12 +103,11 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             key={index}
             onClick={() => selectPlane(plane)}
+            className="absolute cursor-pointer transition-transform transform hover:scale-110"
             style={{
-              position: "absolute",
               top: `${fixY(plane.y)}px`,
               left: `${fixX(plane.x)}px`,
               transform: `rotate(-${plane.direction}deg)`,
-              cursor: "pointer",
             }}
           >
             {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}

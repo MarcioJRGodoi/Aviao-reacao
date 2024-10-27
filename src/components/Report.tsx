@@ -2,7 +2,6 @@ import type React from 'react';
 import { useEffect, useState } from 'react';
 import type { Plane, Tracking } from '../interfaces';
 
-
 interface PositionPlanesService {
   getTracking: () => Tracking[];
 }
@@ -19,9 +18,9 @@ const ReportComponent: React.FC<{ PositionPlanes: PositionPlanesService }> = ({ 
   };
 
   return (
-    <div className="border-solid border-white border-4 rounded-md h-full overflow-y-scroll bg-gray-900 z-50">
-      <div className="sticky top-0 grid grid-cols-12 gap-4 bg-gray-900 z-50 p-2 text-white text-center font-bold overflow-y-scroll">
-        <div className="sticky top-0 col-span-12 grid grid-cols-12 gap-4 p-1 border-2 rounded-sm text-white bg-blue-600 overflow-y-scroll">
+    <div className="container">
+      <div className="header">
+        <div className="table-header">
           <div className="col-span-6">Distância</div>
           <div className="col-span-6">Aviões</div>
         </div>
@@ -30,7 +29,7 @@ const ReportComponent: React.FC<{ PositionPlanes: PositionPlanesService }> = ({ 
       <div className="grid grid-cols-12 gap-4 p-2 text-white text-center font-bold overflow-y-scroll">
         {trackingData.map((tracking, index) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-<div key={index} className="overflow-y-scroll col-span-12 grid grid-cols-12 p-1 cursor-pointer border-2 border-white text-white">
+<div key={index} className="table-row">
             <div className="col-span-6">{tracking.distance.toFixed(2)}</div>
             
             {isArray(tracking.plane ?? []) ? (
@@ -41,7 +40,7 @@ const ReportComponent: React.FC<{ PositionPlanes: PositionPlanesService }> = ({ 
 <svg
                       // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                       key={idx}
-                      className="h-6 px-1 m-auto"
+                      className="plane-icon"
                       fill={plane.color}
                       viewBox="0 0 512.043 512.043"
                     >
@@ -61,7 +60,7 @@ const ReportComponent: React.FC<{ PositionPlanes: PositionPlanesService }> = ({ 
             ) : (
               <div className="col-span-6">
                 {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
-                <svg className="h-6 m-auto" fill={(tracking.plane as unknown as Plane).color} viewBox="0 0 512.043 512.043">
+                <svg className="plane-icon" fill={(tracking.plane as unknown as Plane).color} viewBox="0 0 512.043 512.043">
                   <path d="M496.469,353.365l-197.781-197.76V67.904c0-13.845-3.072-27.797-9.131-40.811l-4.501-8.533
                            C279.744,7.104,268.629,0,256.021,0s-23.723,7.104-28.8,18.069l-4.971,9.493c-5.824,12.544-8.896,26.475-8.896,40.341v87.701
                            L15.637,353.323C5.568,363.392,0.021,376.768,0.021,391.019v25.003c0,3.904,2.133,7.488,5.547,9.344
@@ -77,8 +76,6 @@ const ReportComponent: React.FC<{ PositionPlanes: PositionPlanesService }> = ({ 
           </div>
         ))}
       </div>
-
-      <div className="grid grid-col-7 grid-flow-col gap-4 p-2 text-white text-center" />
     </div>
   );
 };

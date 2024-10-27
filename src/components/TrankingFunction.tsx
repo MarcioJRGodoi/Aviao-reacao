@@ -21,7 +21,7 @@ const TrackingFunctionComponent: React.FC = () => {
 			positionPlanesService.getPlanes(),
 			distanAirport,
 		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		) as any
+		) as any;
 
 		positionPlanesService.addTracking(distances);
 		setDistanAirport(null);
@@ -44,9 +44,7 @@ const TrackingFunctionComponent: React.FC = () => {
 		const selectedPlanes = positionPlanesService.getSelectedPlanes();
 
 		if (selectedPlanes.length < 2 || !timeToColision) {
-			alert(
-				"É preciso selecionar pelo menos 2 aviões e preencher o tempo mínimo!!",
-			);
+			alert("É preciso selecionar pelo menos 2 aviões e preencher o tempo mínimo!!");
 			return;
 		}
 
@@ -55,77 +53,68 @@ const TrackingFunctionComponent: React.FC = () => {
 			planes: selectedPlanes,
 		});
 
-		positionPlanesService.addTracking({tracking: distances});
+		positionPlanesService.addTracking({ tracking: distances });
 		setTimeToColision(null);
 		positionPlanesService.clearSelectedPlanes();
 	};
 
 	return (
-		<div className="grid grid-cols-12 gap-2 h-full text-center">
-			<div className="col-span-4 border-4 p-4 border-white">
-				<div className="grid grid-rows-2 text-center mt-4">
-					<div>
-						{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
-						<label className="text-white">Distância Mín: </label>
-						<input
-							className="w-16 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
-							type="number"
-							value={distanAirport ?? ""}
-							onChange={(e) => setDistanAirport(Number(e.target.value))}
-						/>
-					</div>
-					{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-					<button
-						className="mx-auto mt-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
-						onClick={handleAirpotDistance}
-					>
-						Aviões próximos ao Aeroporto
-					</button>
-				</div>
+		<div className="flex flex-col md:flex-row justify-center items-start p-4 bg-gray-800 rounded-lg shadow-lg h-full">
+			{/* Seção para Aviões próximos ao Aeroporto */}
+			<div className="flex flex-col items-center bg-gray-700 border border-gray-600 rounded-lg p-5 m-2 w-full md:w-1/3">
+				{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
+<label className="text-white mb-2">Distância Mín:</label>
+				<input
+					className="w-full max-w-xs p-2 mb-4 border border-gray-600 rounded-lg bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+					type="number"
+					value={distanAirport ?? ""}
+					onChange={(e) => setDistanAirport(Number(e.target.value))}
+				/>
+				{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+<button
+					className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg p-2 transition-colors duration-300"
+					onClick={handleAirpotDistance}
+				>
+					Aviões próximos ao Aeroporto
+				</button>
 			</div>
 
-			<div className="col-span-4 border-4 p-4 border-white">
-				<div className="grid grid-rows-2 text-center mt-4">
-					<div>
-						{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
-						<label className="text-white">Distância Mín: </label>
-						<input
-							className="w-16 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
-							type="number"
-							value={distanNearly ?? ""}
-							onChange={(e) => setDistanNearly(Number(e.target.value))}
-						/>
-					</div>
-					{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-					<button
-						className="mx-auto mt-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
-						onClick={handleNearlyPlanes}
-					>
-						Aviões Próximos
-					</button>
-				</div>
+			{/* Seção para Aviões Próximos */}
+			<div className="flex flex-col items-center bg-gray-700 border border-gray-600 rounded-lg p-4 m-2 w-full md:w-1/3">
+				{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
+<label className="text-white mb-2">Distância Mín:</label>
+				<input
+					className="w-full max-w-xs p-2 mb-4 border border-gray-600 rounded-lg bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+					type="number"
+					value={distanNearly ?? ""}
+					onChange={(e) => setDistanNearly(Number(e.target.value))}
+				/>
+				{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+<button
+					className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg p-2 transition-colors duration-300"
+					onClick={handleNearlyPlanes}
+				>
+					Aviões Próximos
+				</button>
 			</div>
 
-			<div className="col-span-4 border-4 p-4 border-white">
-				<div className="grid grid-rows-2 text-center mt-4">
-					<div>
-						{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
-						<label className="text-white">Tempo Mín.: </label>
-						<input
-							className="w-16 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
-							type="number"
-							value={timeToColision ?? ""}
-							onChange={(e) => setTimeToColision(Number(e.target.value))}
-						/>
-					</div>
-					{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-					<button
-						className="mx-auto mt-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
-						onClick={handleColisionTime}
-					>
-						Em rota de colisão
-					</button>
-				</div>
+			{/* Seção para Em Rota de Colisão */}
+			<div className="flex flex-col items-center bg-gray-700 border border-gray-600 rounded-lg p-4 m-2 w-full md:w-1/3">
+				{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
+<label className="text-white mb-2">Tempo Mín:</label>
+				<input
+					className="w-full max-w-xs p-2 mb-4 border border-gray-600 rounded-lg bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+					type="number"
+					value={timeToColision ?? ""}
+					onChange={(e) => setTimeToColision(Number(e.target.value))}
+				/>
+				{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+<button
+					className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg p-2 transition-colors duration-300"
+					onClick={handleColisionTime}
+				>
+					Em rota de colisão
+				</button>
 			</div>
 		</div>
 	);
