@@ -42,7 +42,7 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 		) as any;
 
-		positionPlanes.addTracking(distances);
+		positionPlanes.addTracking({tracking: distances});
 		setDistanNearly(null);
 	};
 
