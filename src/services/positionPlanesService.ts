@@ -95,7 +95,7 @@ public addPlane(plane: Plane): void {
   }
 
   private isValidPlane(plane: Plane): boolean {
-    if (plane.x > 4.7 || plane.x < -4.7 || plane.y > 4.7 || plane.y < -4.7) {
+    if (plane.x > 100 || plane.x < -100|| plane.y > 100|| plane.y < -100) {
       toast.error('Avião posicionado fora do alcance', { position: "top-right" });
       return false;
     }

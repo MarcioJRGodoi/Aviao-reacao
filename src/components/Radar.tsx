@@ -146,9 +146,8 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
       positionPlane.selectPlane(plane);
     }
   };
-
-  const fixX = (x: number) => (x * 60) + 299 - 15;
-  const fixY = (y: number) => (y * -60) + 299 - 15;
+  const fixX = (x: number) => (x * 2) + 299 - 15; // Reduza de 60 para 30, por exemplo
+  const fixY = (y: number) => (y * -2) + 299 - 15;
 
   return (
     <RadarContainer isInitial={isInitial}>
