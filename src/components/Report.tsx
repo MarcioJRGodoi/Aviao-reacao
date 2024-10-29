@@ -43,7 +43,7 @@ const ReportComponent: React.FC<RadarProps> = ({ positionPlane }) => {
         {trackingData.map((tracking, index) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
           <div key={index} className="overflow-y-scroll col-span-12 grid grid-cols-12 p-1 cursor-pointer border-2 border-white text-white">
-            <div className="col-span-6">{tracking.distance ? tracking.distance.toFixed(2) : ""}</div>
+            <div className="col-span-6">{tracking.distance ? tracking.distance.toFixed(2) : 0}</div>
 
             {isArray(tracking.plane ?? []) ? (
               <div className="col-span-6">
