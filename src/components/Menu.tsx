@@ -9,7 +9,7 @@ import DataGrid from './DataGrid';
 import Report from './Report';
 import { PositionPlanesService } from '../services/positionPlanesService';
 import { LogicService } from '../services/logicService';
-
+import './CSS/cssMenu.css';
 const Menu: React.FC = () => {
   const [state, setState] = useState<'initial' | 'final'>('initial');
 
@@ -38,13 +38,16 @@ const Menu: React.FC = () => {
         </div>
         <div className="row-span-4 col-span-6">
           {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-          <div
-            className={`w-20 h-4 bg-gray-400 mx-auto rounded-lg cursor-pointer ${state === 'final' ? 'animate-pressButton' : ''}`}
-            onClick={changeState}
-          />
+        
           {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
-          <div className="w-10 h-2 bg-gray-400 mx-auto"></div>
-          <Radar positionPlane={positionPlanes} />
+      
+   
+            <div  className="button" onClick={changeState}>
+          Limpar Dados
+
+            </div>
+
+          <Radar positionPlane={positionPlanes} />  
         </div>
         <div className="row-span-2 col-span-6">
           <h1 className="text-white font-bold text-center text-md">DataGrid</h1>

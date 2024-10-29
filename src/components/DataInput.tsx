@@ -72,8 +72,8 @@ const DataInput: React.FC<DataInputProps> = ({ radar }) => {
   };
 
   return (
-    <div className="border-solid border-white border-4 rounded-md p-2">
-      <div className="p-1 my-4 grid grid-cols-2 gap-3 text-left">
+    <div className="border-solid border-green border-2 rounded-md p-2">
+      <div className="p-1 my-4 grid grid-cols-2 gap-3 text-left shadow-zinc-800">
         <div className="relative">
           {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
           <label className="text-white">X: </label>
@@ -147,7 +147,7 @@ const DataInput: React.FC<DataInputProps> = ({ radar }) => {
       <div>
         {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
         <button
-          className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
+         className="w-full bg-green-800 hover:bg-blue-700 text-white font-bold rounded"
           onClick={insertAirplane}
         >
           Inserir

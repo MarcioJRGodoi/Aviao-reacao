@@ -1,0 +1,74 @@
+/* From Uiverse.io by Spacious74 */ 
+.bgblue {
+    background: linear-gradient(135deg, #fffffff5, #3a4b8a, #ffffff98);
+    padding: 1px;
+    border-radius: 1.2rem;
+    box-shadow: 0px 1rem 1.5rem -0.9rem #045c17e1;
+  
+  }
+  .relative{
+    margin-top: 5px;
+  }
+  .card {
+    font-size: 1rem;
+    color: #bec4cf;
+    background: linear-gradient(135deg, #062719 0%, #161f1a 43%, #1a311c 100%);
+    padding: 1.5rem;
+    border-radius: 1.2rem;
+
+  }
+  
+  .button {
+    
+    /* in scss with just one variable i can change opacity with rgba(variable, opacity) but in css it's not possible so i have used three seperate variables */
+    /* with hue-rotate color can be changed */
+    --main-color: rgb(46, 213, 115);
+    --main-bg-color: rgba(46, 213, 116, 0.36);
+    --pattern-color: rgba(46, 213, 116, 0.073);
+  
+    /* change this rotation value */
+    filter: hue-rotate(0deg);
+  text-align: center;
+  
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    background: radial-gradient(
+        circle,
+        var(--main-bg-color) 0%,
+        rgba(0, 0, 0, 0) 95%
+      ),
+      linear-gradient(var(--pattern-color) 1px, transparent 1px),
+      linear-gradient(to right, var(--pattern-color) 1px, transparent 1px);
+    background-size:
+      cover,
+      15px 15px,
+      15px 15px;
+    background-position:
+      center center,
+      center center,
+      center center;
+    border-image: radial-gradient(
+        circle,
+        var(--main-color) 0%,
+        rgba(0, 0, 0, 0) 100%
+      )
+      1;
+    border-width: 1px 0 1px 0;
+    color: var(--main-color);
+    padding: 1px 3px;
+    font-weight: 400;
+    font-size: 1.5rem;
+    transition: background-size 0.2s ease-in-out;
+  }
+  
+  .button:hover {
+    background-size:
+      cover,
+      10px 10px,
+      10px 10px;
+  }
+  .button:active {
+    filter: hue-rotate(250deg);
+  }
+  

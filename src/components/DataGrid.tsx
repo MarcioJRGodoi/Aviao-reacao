@@ -55,9 +55,9 @@ const DataGrid: React.FC<DataGridProps> = ({ positionPlane }) => {
   };
 
   return (
-    <div className="border-solid border-white border-4 rounded-md h-full overflow-y-scroll bg-gray-900 z-50">
-      <div className="sticky top-0 grid grid-cols-12 gap-4 bg-gray-900 z-50 p-2 text-white text-center font-bold overflow-y-scroll">
-        <div className="col-span-12 grid grid-cols-12 gap-4 p-1 border-2 rounded-sm text-white bg-blue-600 overflow-y-scroll">
+    <div className="border-solid border-green border-2 rounded-md h-full overflow-y-scroll bg-black-300 z-50">
+      <div className="sticky top-0 grid grid-cols-12 gap-4 bg-gray-900 z-50 p-2 text-white text-center font-bold border-2">
+        <div className="col-span-12 grid grid-cols-12 gap-4 p-1  rounded-sm text-white bg-grey-700 ">
           <div className="col-span-1">#</div>
           <div className="col-span-1">X</div>
           <div className="col-span-1">Y</div>
@@ -70,13 +70,13 @@ const DataGrid: React.FC<DataGridProps> = ({ positionPlane }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-4 p-2 text-white text-center font-bold overflow-y-scroll">
+      <div className="grid grid-cols-12 gap-4 p-2 text-white text-center font-bold ">
         {planes.map((plane) => (
           // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
           <div
             key={plane.id}
             onClick={() => (selectPlane(plane))}
-            className={`col-span-12 grid grid-cols-12 gap-4 p-1 cursor-pointer border-2 border-white ${positionPlane.checkIsSelected(plane) ? 'bg-white bg-opacity-50' : 'hover:bg-white hover:bg-opacity-25'
+            className={`border-t border-gray-300 my-2 col-span-12 leading-3 grid grid-cols-12 gap-4 p-1 cursor-pointer  border-white ${positionPlane.checkIsSelected(plane) ? 'bg-white bg-opacity-50' : 'hover:bg-white hover:bg-opacity-25'
               }`}
           >
             <div className="col-span-1">
