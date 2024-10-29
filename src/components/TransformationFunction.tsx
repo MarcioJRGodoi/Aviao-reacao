@@ -2,6 +2,7 @@ import type React from 'react';
 import { useState } from 'react';
 import type { PositionPlanesService } from '../services/positionPlanesService';
 import type { LogicService } from '../services/logicService';
+import { toast } from 'react-toastify';
 
 interface TransformationFunctionProps {
   positionPlanes: PositionPlanesService;
@@ -23,7 +24,7 @@ const TransformationFunction: React.FC<TransformationFunctionProps> = ({ positio
 
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     // biome-ignore lint/complexity/noForEach: <explanation>
-        planes.forEach((plane: any) => {
+    planes.forEach((plane: any) => {
       positionPlanes.editPlane({ ...plane });
     });
 
@@ -38,7 +39,7 @@ const TransformationFunction: React.FC<TransformationFunctionProps> = ({ positio
 
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     // biome-ignore lint/complexity/noForEach: <explanation>
-        planes.forEach((plane: any) => {
+    planes.forEach((plane: any) => {
       positionPlanes.editPlane({ ...plane });
     });
 
@@ -48,12 +49,12 @@ const TransformationFunction: React.FC<TransformationFunctionProps> = ({ positio
   };
 
   const rotate = () => {
-    if (xRotate == null || yRotate == null || angle == null || positionPlanes.getSelectedPlanes().length === 0) return;
+    if (xRotate == null || yRotate == null || angle == null || positionPlanes.getSelectedPlanes().length === 0) 
+      return toast.error('Preencha todos os campos!');
     const planes = logic.rotate(positionPlanes.getSelectedPlanes(), angle, xRotate, yRotate);
-    console.log(planes);
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     // biome-ignore lint/complexity/noForEach: <explanation>
-        planes.forEach((plane: any) => {
+    planes.forEach((plane: any) => {
       positionPlanes.editPlane({ ...plane });
     });
 
@@ -90,7 +91,7 @@ const TransformationFunction: React.FC<TransformationFunctionProps> = ({ positio
           </div>
           <div className="col-span-2">
             {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-            <button   className="w-full bg-green-800 hover:bg-blue-700 text-white font-bold rounded" onClick={translate}>
+            <button className="w-full bg-green-800 hover:bg-blue-700 text-white font-bold rounded" onClick={translate}>
               Transladar
             </button>
           </div>
@@ -122,7 +123,7 @@ const TransformationFunction: React.FC<TransformationFunctionProps> = ({ positio
           </div>
           <div className="col-span-2">
             {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-            <button   className="w-full bg-green-800 hover:bg-blue-700 text-white font-bold rounded" onClick={stagger}>
+            <button className="w-full bg-green-800 hover:bg-blue-700 text-white font-bold rounded" onClick={stagger}>
               Escalonar
             </button>
           </div>
@@ -149,7 +150,7 @@ const TransformationFunction: React.FC<TransformationFunctionProps> = ({ positio
 
           <div>
             {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-            <button   className="w-full bg-green-800 hover:bg-blue-700 text-white font-bold rounded" onClick={rotate}>
+            <button className="w-full bg-green-800 hover:bg-blue-700 text-white font-bold rounded" onClick={rotate}>
               Rotacionar
             </button>
           </div>

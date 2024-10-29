@@ -11,7 +11,7 @@ export class LogicService {
     return [distance * cos, distance * sin];
   }
 
-  move(planes: { x: number; y: number }[], x: number, y: number) {
+  move(planes: Plane[], x: number, y: number) {
     return planes.map((plane) => ({
       ...plane,
       x: plane.x + x,
