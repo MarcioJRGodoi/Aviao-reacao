@@ -78,7 +78,6 @@ public addPlane(plane: Plane): void {
     const planeToUnSelectIndex = this.selectedPlanes.findIndex((plane) => plane.id === planeToUnSelect.id);
     if (planeToUnSelectIndex !== -1) {
       this.selectedPlanes.splice(planeToUnSelectIndex, 1);
-      toast.success('Avião desmarcado com sucesso!', { position: "top-right" });
     }
     this.notifyChange(); // Notifica a mudança
   }
@@ -89,7 +88,6 @@ public addPlane(plane: Plane): void {
 
   public clearSelectedPlanes(): void {
     this.selectedPlanes = [];
-    toast.info('Todos os aviões selecionados foram limpos.', { position: "top-right" });
   }
 
   public checkIsSelected(planeToCheck: Plane): boolean {
