@@ -12,22 +12,19 @@ const ReportComponent: React.FC<RadarProps> = ({ positionPlane }) => {
   const [trackingData, setTrackingData] = useState<Tracking[]>([]);
   const [_planes, setPlanes] = useState<Plane[]>(positionPlane.getPlanes());
 
-
-  useEffect(() => {
-    setTrackingData(positionPlane.getTracking());
-  }, [positionPlane]);
-
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const handleChange = () => {
+      console.log(positionPlane.getTracking());
+      setTrackingData(positionPlane.getTracking());
       setPlanes([...positionPlane.getPlanes()]);
     };
     positionPlane.subscribeOnChange(handleChange);
-
     return () => {
       // Clean up the subscription
       positionPlane.subscribeOnChange(handleChange);
     };
-  }, [positionPlane]);
+  }, [positionPlane.a]);
 
   const isArray = (planes: Plane | Plane[]): planes is Plane[] => {
     return Array.isArray(planes) && planes.length > 1;
@@ -45,15 +42,15 @@ const ReportComponent: React.FC<RadarProps> = ({ positionPlane }) => {
       <div className="grid grid-cols-12 gap-4 p-2 text-white text-center font-bold overflow-y-scroll">
         {trackingData.map((tracking, index) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-<div key={index} className="overflow-y-scroll col-span-12 grid grid-cols-12 p-1 cursor-pointer border-2 border-white text-white">
-            <div className="col-span-6">{tracking.distance.toFixed(2)}</div>
-            
+          <div key={index} className="overflow-y-scroll col-span-12 grid grid-cols-12 p-1 cursor-pointer border-2 border-white text-white">
+            <div className="col-span-6">{tracking.distance ? tracking.distance.toFixed(2) : 0}</div>
+
             {isArray(tracking.plane ?? []) ? (
               <div className="col-span-6">
                 <div className="inline-flex">
                   {tracking.plane?.map((plane, idx) => (
                     // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
-<svg
+                    <svg
                       // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                       key={idx}
                       className="h-6 px-1 m-auto"

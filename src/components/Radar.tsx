@@ -133,7 +133,7 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
 
     return () => {
       // Clean up the subscription
-      positionPlane.subscribeOnChange(handleChange);
+      positionPlane.unsubscribeOnChange(handleChange);
     };
   }, [positionPlane]);
 
