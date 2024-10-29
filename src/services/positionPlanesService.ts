@@ -3,10 +3,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import type { Plane, Tracking } from '../interfaces';
 
 export class PositionPlanesService {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  [x: string]: any;
   private planes: Plane[] = [];
   private selectedPlanes: Plane[] = [];
   private tracking: Tracking[] = [];
   private radarState = 'initial';
+  public a = 0;
 
   public getPlanes(): Plane[] {
     return this.planes;
@@ -16,6 +19,10 @@ export class PositionPlanesService {
 
 public subscribeOnChange(callback: () => void): void {
   this.onChangeCallbacks.push(callback);
+}
+
+public unsubscribeOnChange(callback: () => void): void {
+  this.onChangeCallbacks = this.onChangeCallbacks.filter(cb => cb !== callback);
 }
 
 public notifyChange(): void {
@@ -107,8 +114,8 @@ public addPlane(plane: Plane): void {
 
   public addTracking({tracking}: {tracking: Tracking[]}): void {
     this.tracking.push(...tracking); // Para acumular rastreamentos
-    console.log(this.tracking);
     this.notifyChange(); // Notifica a mudança
+    this.a = this.a + 1;
 
   }
 

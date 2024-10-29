@@ -109,8 +109,8 @@ export class LogicService {
     return this.distanceBetweenTwoPoints(p1.x, p1.y, p2.x, p2.y) / velocity;
   }
 
-  planesInCollisionRoute({ minimumTime, planes }: { planes: Plane[], minimumTime: number }) {
-    const collisionPlanes: { plane: { x: number; y: number }[]; time: number }[] = [];
+  planesInCollisionRoute({ minimumTime, planes }: { planes: Plane[]; minimumTime: number }): Tracking[] {
+    const collisionPlanes: Tracking[] = [];
 
     for (let i = 0; i < planes.length; i++) {
       const planeI = planes[i];
@@ -119,19 +119,22 @@ export class LogicService {
       for (let j = i + 1; j < planes.length; j++) {
         const planeJ = planes[j];
         const pj2 = this.calculatedFinishPoint(planeJ, minimumTime);
-
         const intersectionPoint = this.calculateIntersectionPoint(planeI, pi2, planeJ, pj2);
-        const t1 = this.calculateTiming(planeI, intersectionPoint, planeI.velocity);
-        const t2 = this.calculateTiming(planeJ, intersectionPoint, planeJ.velocity);
 
-        if (t1 === t2) {
-          collisionPlanes.push({ plane: [planeI, planeJ], time: t1 });
+        if (intersectionPoint) {
+          const t1 = this.calculateTiming(planeI, intersectionPoint, planeI.velocity);
+          const t2 = this.calculateTiming(planeJ, intersectionPoint, planeJ.velocity);
+
+          console.log("Timings:", t1, t2)
+          const epsilon = 0.001;
+          // if (Math.abs(t1 - t2) < epsilon && t1 <= minimumTime && t2 <= minimumTime) {
+            collisionPlanes.push({ plane: [planeI, planeJ], distance: t1 });
+          // }
         }
       }
     }
-    const gambi = collisionPlanes as unknown as { plane: Plane[]; distance: number }[];
 
-    return gambi as Tracking[];
+    return collisionPlanes;
   }
 
   distanceBetweenTwoPoints(x1: number, y1: number, x2: number, y2: number) {
