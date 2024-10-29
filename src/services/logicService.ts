@@ -19,7 +19,7 @@ export class LogicService {
     }));
   }
 
-  rotate(planes: { x: number; y: number }[], angle: number, xOrigin: number, yOrigin: number) {
+  rotate(planes: Plane[], angle: number, xOrigin: number, yOrigin: number) {
     const resultPlanes: typeof planes = [];
     const radians = angle * (Math.PI / 180);
     const cos = Math.cos(radians);
@@ -34,6 +34,12 @@ export class LogicService {
       resultPlanes.push({
         x: xFinal + xOrigin,
         y: yFinal + yOrigin,
+        id: plane.id,
+        radius: plane.radius,
+        angle: plane.angle,
+        velocity: plane.velocity,
+        direction: plane.direction,
+        color: plane.color,
       });
     }
 

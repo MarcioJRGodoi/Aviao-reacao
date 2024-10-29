@@ -50,7 +50,7 @@ const TransformationFunction: React.FC<TransformationFunctionProps> = ({ positio
   const rotate = () => {
     if (xRotate == null || yRotate == null || angle == null || positionPlanes.getSelectedPlanes().length === 0) return;
     const planes = logic.rotate(positionPlanes.getSelectedPlanes(), angle, xRotate, yRotate);
-
+    console.log(planes);
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     // biome-ignore lint/complexity/noForEach: <explanation>
         planes.forEach((plane: any) => {
