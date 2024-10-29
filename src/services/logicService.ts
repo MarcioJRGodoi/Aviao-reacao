@@ -67,14 +67,14 @@ export class LogicService {
       .filter((item) => item.distance <= minimumDistance);
   }
 
-  planesClosestToPlanes(planes: { x: number; y: number }[], minimumDistance: number) {
-    const closestPlanes: { plane: { x: number; y: number }[]; distance: number }[] = [];
+  planesClosestToPlanes(planes: Plane[], minimumDistance: number): Tracking[] {
+    const closestPlanes: Tracking[] = [];
 
     for (let i = 0; i < planes.length; i++) {
       for (let j = i + 1; j < planes.length; j++) {
         const distance = this.distanceBetweenTwoPoints(planes[i].x, planes[i].y, planes[j].x, planes[j].y);
         if (distance <= minimumDistance) {
-          closestPlanes.push({ plane: [planes[i], planes[j]], distance });
+          closestPlanes.push({ plane: [planes[i], planes[j]], distance, message: "Avioes Proximos" });
         }
       }
     }

@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import type { Plane, Tracking } from '../interfaces';
 import type { PositionPlanesService } from '../services/positionPlanesService';
 
-
 interface RadarProps {
   positionPlane: PositionPlanesService;
 }
@@ -12,7 +11,6 @@ const ReportComponent: React.FC<RadarProps> = ({ positionPlane }) => {
   const [trackingData, setTrackingData] = useState<Tracking[]>([]);
   const [_planes, setPlanes] = useState<Plane[]>(positionPlane.getPlanes());
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const handleChange = () => {
       console.log(positionPlane.getTracking());
@@ -21,10 +19,9 @@ const ReportComponent: React.FC<RadarProps> = ({ positionPlane }) => {
     };
     positionPlane.subscribeOnChange(handleChange);
     return () => {
-      // Clean up the subscription
-      positionPlane.subscribeOnChange(handleChange);
+      positionPlane.unsubscribeOnChange(handleChange);
     };
-  }, [positionPlane.a]);
+  }, [positionPlane]);
 
   const isArray = (planes: Plane | Plane[]): planes is Plane[] => {
     return Array.isArray(planes) && planes.length > 1;
@@ -32,25 +29,24 @@ const ReportComponent: React.FC<RadarProps> = ({ positionPlane }) => {
 
   return (
     <div className="border-solid border-white border-4 rounded-md h-full overflow-y-scroll bg-gray-900 z-50">
-      <div className="sticky top-0 grid grid-cols-12 gap-4 bg-gray-900 z-50  text-white text-center font-bold ">
-        <div className="sticky top-0 col-span-12 grid grid-cols-12 gap-4 p-1 border-2 rounded-sm text-white bg-green-900 ">
-          <div className="col-span-6">Distância</div>
-          <div className="col-span-6">Aviões</div>
+      <div className="sticky top-0 grid grid-cols-12 gap-4 bg-gray-900 z-50 text-white text-center font-bold">
+        <div className="sticky top-0 col-span-12 grid grid-cols-12 gap-4 p-1 border-2 rounded-sm text-white bg-green-900">
+          <div className="col-span-4">Distância</div>
+          <div className="col-span-4">Mensagem</div>
+          <div className="col-span-4">Aviões</div>
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-4 p-2 text-white text-center font-bold ">
+      <div className="grid grid-cols-12 gap-4 p-2 text-white text-center font-bold">
         {trackingData.map((tracking, index) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
           <div key={index} className="overflow-y-scroll col-span-12 grid grid-cols-12 p-1 cursor-pointer border-2 border-white text-white">
-            <div className="col-span-6">{tracking.distance ? tracking.distance.toFixed(2) : 0}</div>
+            <div className="col-span-4">{tracking.distance ? tracking.distance.toFixed(2) : 0}</div>
+            <div className="col-span-4">{tracking.message || "Sem mensagem"}</div>
             {isArray(tracking.plane ?? []) ? (
-              <div className="col-span-6">
+              <div className="col-span-4">
                 <div className="inline-flex">
                   {tracking.plane?.map((plane, idx) => (
-                    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
                     <svg
-                      // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                       key={idx}
                       className="h-6 px-1 m-auto"
                       fill={plane.color}
@@ -70,8 +66,7 @@ const ReportComponent: React.FC<RadarProps> = ({ positionPlane }) => {
                 </div>
               </div>
             ) : (
-              <div className="col-span-6">
-                {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
+              <div className="col-span-4">
                 <svg className="h-6 m-auto" fill={(tracking.plane as unknown as Plane).color} viewBox="0 0 512.043 512.043">
                   <path d="M496.469,353.365l-197.781-197.76V67.904c0-13.845-3.072-27.797-9.131-40.811l-4.501-8.533
                            C279.744,7.104,268.629,0,256.021,0s-23.723,7.104-28.8,18.069l-4.971,9.493c-5.824,12.544-8.896,26.475-8.896,40.341v87.701
@@ -88,8 +83,6 @@ const ReportComponent: React.FC<RadarProps> = ({ positionPlane }) => {
           </div>
         ))}
       </div>
-
-      <div className="grid grid-col-7 grid-flow-col gap-4 p-2 text-white text-center" />
     </div>
   );
 };

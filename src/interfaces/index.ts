@@ -13,4 +13,5 @@ export interface Plane {
   export interface Tracking {
     distance: number;
     plane?: Plane[]
+    message?: string;
   }
