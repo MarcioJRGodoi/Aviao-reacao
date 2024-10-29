@@ -33,11 +33,10 @@ const DataInput: React.FC<DataInputProps> = ({ radar }) => {
   };
 
   const insertAirplane = () => {
-    if (x === null || y === null || radius === null || angle === null || velocity === null || direction === null) {
+    if (x === null || y === null) {
       toastr.error('Por favor, preencha todos os campos necessários.');
       return;
     }
-  
     const plane = {
       id: Date.now(),
       x: x ?? 0,
@@ -45,7 +44,7 @@ const DataInput: React.FC<DataInputProps> = ({ radar }) => {
       radius: radius ?? 0,
       angle: angle ?? 0,
       velocity: velocity ?? 0,
-      direction: direction % 360,  // Ajuste para manter a direção entre 0 e 360
+      direction: direction? direction % 360 : 0,  // Ajuste para manter a direção entre 0 e 360
       color: getRandomColor(),
     };
   

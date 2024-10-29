@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const App: React.FC = () => (
   <>
     <AppRouter />
-    <ToastContainer autoClose={2000} />
+    <ToastContainer autoClose={1500} />
   </>
 );
 

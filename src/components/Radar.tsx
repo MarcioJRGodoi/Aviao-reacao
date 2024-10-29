@@ -147,8 +147,8 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
     }
   };
 
-  const fixX = (x: number) => x * 60 + 299 - 15;
-  const fixY = (y: number) => y * -60 + 299 - 15;
+  const fixX = (x: number) => (x * 60) + 299 - 15;
+  const fixY = (y: number) => (y * -60) + 299 - 15;
 
   return (
     <RadarContainer isInitial={isInitial}>
@@ -187,7 +187,7 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
               position: "absolute",
               top: `${fixY(plane.y)}px`,
               left: `${fixX(plane.x)}px`,
-              transform: `rotate(-${plane.direction}deg)`,
+              transform: `rotate(${plane.direction}deg)`,
               cursor: "pointer",
             }}
           >
