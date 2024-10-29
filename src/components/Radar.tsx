@@ -1,46 +1,121 @@
 import type React from "react";
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import type { PositionPlanesService } from "../services/positionPlanesService";
 import type { Plane } from "../interfaces";
 
+// Efeito de expansão para o radar
+const radarSweep = keyframes`
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.5;
+  }
+  100% {
+    width: 600px;
+    height: 600px;
+    opacity: 0;
+  }
+`;
+const RadarSweepEffect = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background-color: rgba(0, 255, 0, 0.2); /* Cor verde semi-transparente */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: ${radarSweep} 2s linear infinite; /* Animação contínua */
+`;
 const RadarContainer = styled.div<{ isInitial: boolean }>`
   border: 8px solid gray;
-  border-radius: ${(props) => (props.isInitial ? "605px" : "0px")};
-  background-color: #008500;
+  border-radius: 50%; /* Isso garante o formato circular */
+  background-color: #black;
   width: 605px;
   height: 605px;
   position: relative;
   z-index: 999999999;
+  overflow: hidden; /* Propriedade para manter a grade dentro do círculo */
   transition: border-radius 1s;
+`;
+// Define os estilos para os círculos internos sem preenchimento
+const InnerCircleSmall = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px; /* Tamanho do círculo menor */
+  height: 200px;
+  border: 2px solid rgba(0, 255, 0, 0.5); /* Cor verde com transparência para o contorno */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+const InnerCircleLarge = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px; /* Tamanho do círculo maior */
+  height: 400px;
+  border: 3px solid rgba(0, 255, 0, 0.3); /* Cor verde mais clara e transparente para o contorno */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const GridCell = styled.div`
   width: 60px;
   height: 60px;
-  border: 1px solid black;
+  border: 1px solid  #008500;
   opacity: 0.25;
 `;
 
-const Line = styled.div<{ vertical?: boolean }>`
+const LineV = styled.div<{ vertical?: boolean }>`
   position: absolute;
-  background-color: black;
-  ${(props) =>
-    props.vertical
-      ? "width: 2px; height: 600px; left: 299px;"
-      : "height: 2px; width: 600px; top: 299px;"}
+background-color: rgba(82, 164, 72, 0.2);
+   height: 2px; width: 600px; top: 299px; 
+  
+`;
+const LineH = styled.div<{ vertical?: boolean }>`
+  position: absolute;
+background-color: rgba(82, 164, 72, 0.2);
+  height: 600px; width: 600px; top: 0px; 
+  width: 2px; height: 600px; left: 299px;"
 `;
 
 const RadarCenter = styled.div`
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #b91c1c;
+ background-color: #52a448;
   position: absolute;
   top: 295px;
   left: 295px;
 `;
 
+
+const spin = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+const PalitoContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: translate(-50%, -50%);
+  animation: ${spin} 5s linear infinite;
+`;
+
+const Palito = styled.div`
+  width: 8px; /* Largura do palito */
+  height: 300px; /* Aumentamos a altura do palito */
+  background-color: #52a448;
+  border-radius: 4px; /* Suavizamos as bordas */
+  position: absolute;
+  top: -300px; /* Move o palito para cima */
+  left: -4px; /* Centraliza horizontalmente o palito */
+`;
 
 interface RadarProps {
   positionPlane: PositionPlanesService;
@@ -77,6 +152,10 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
 
   return (
     <RadarContainer isInitial={isInitial}>
+         <RadarSweepEffect />
+         <InnerCircleLarge /> {/* Círculo maior */}
+      <InnerCircleSmall /> {/* Círculo menor */}
+      
       <div style={{ width: "600px", height: "600px", position: "relative" }}>
         <div
           style={{
@@ -90,9 +169,11 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
             <GridCell key={index} />
           ))}
         </div>
-
-        <Line vertical />
-        <Line />
+        <PalitoContainer>
+          <Palito />
+        </PalitoContainer>
+        <LineV  />
+        <LineH  />
 
         <RadarCenter />
 
