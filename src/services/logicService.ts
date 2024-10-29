@@ -74,7 +74,7 @@ export class LogicService {
       for (let j = i + 1; j < planes.length; j++) {
         const distance = this.distanceBetweenTwoPoints(planes[i].x, planes[i].y, planes[j].x, planes[j].y);
         if (distance <= minimumDistance) {
-          closestPlanes.push({ plane: [planes[i], planes[j]], distance, message: "Avioes Proximos" });
+          closestPlanes.push({ plane: [planes[i], planes[j]], distance, message: `Avioes Proximos Distancia: ${distance.toFixed(2)} Km`  });
         }
       }
     }

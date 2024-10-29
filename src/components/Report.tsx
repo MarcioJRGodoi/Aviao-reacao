@@ -31,8 +31,7 @@ const ReportComponent: React.FC<RadarProps> = ({ positionPlane }) => {
     <div className="border-solid border-white border-4 rounded-md h-full overflow-y-scroll bg-gray-900 z-50">
       <div className="sticky top-0 grid grid-cols-12 gap-4 bg-gray-900 z-50 text-white text-center font-bold">
         <div className="sticky top-0 col-span-12 grid grid-cols-12 gap-4 p-1 border-2 rounded-sm text-white bg-green-900">
-          <div className="col-span-4">Distância</div>
-          <div className="col-span-4">Mensagem</div>
+          <div className="col-span-8">Mensagem</div>
           <div className="col-span-4">Aviões</div>
         </div>
       </div>
@@ -40,8 +39,8 @@ const ReportComponent: React.FC<RadarProps> = ({ positionPlane }) => {
       <div className="grid grid-cols-12 gap-4 p-2 text-white text-center font-bold">
         {trackingData.map((tracking, index) => (
           <div key={index} className="overflow-y-scroll col-span-12 grid grid-cols-12 p-1 cursor-pointer border-2 border-white text-white">
-            <div className="col-span-4">{tracking.distance ? tracking.distance.toFixed(2) : 0}</div>
-            <div className="col-span-4">{tracking.message || "Sem mensagem"}</div>
+            {/* <div className="col-span-4">{tracking.distance ? tracking.distance.toFixed(2) : 0}</div> */}
+            <div className="col-span-8">{tracking.message || ""}</div>
             {isArray(tracking.plane ?? []) ? (
               <div className="col-span-4">
                 <div className="inline-flex">
