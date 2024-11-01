@@ -117,31 +117,39 @@ export class LogicService {
 
   planesInCollisionRoute({ minimumTime, planes }: { planes: Plane[]; minimumTime: number }): Tracking[] {
     const collisionPlanes: Tracking[] = [];
+    const epsilon = 0.5; // Reduzido para maior precisão
 
     for (let i = 0; i < planes.length; i++) {
-      const planeI = planes[i];
-      const pi2 = this.calculatedFinishPoint(planeI, minimumTime);
+        const planeI = planes[i];
 
-      for (let j = i + 1; j < planes.length; j++) {
-        const planeJ = planes[j];
-        const pj2 = this.calculatedFinishPoint(planeJ, minimumTime);
-        const intersectionPoint = this.calculateIntersectionPoint(planeI, pi2, planeJ, pj2);
+        for (let j = i + 1; j < planes.length; j++) {
+            const planeJ = planes[j];
 
-        if (intersectionPoint) {
-          const t1 = this.calculateTiming(planeI, intersectionPoint, planeI.velocity);
-          const t2 = this.calculateTiming(planeJ, intersectionPoint, planeJ.velocity);
+            for (let t = 0; t <= minimumTime; t += 0.1) { // Incremento de tempo em 0.1 segundos
+                // Calcula a posição de cada avião após `t` segundos
+                const posI = this.calculatedFinishPoint(planeI, t);
+                const posJ = this.calculatedFinishPoint(planeJ, t);
 
-          console.log("Timings:", t1, t2)
-          const epsilon = 0.001;
-          // if (Math.abs(t1 - t2) < epsilon && t1 <= minimumTime && t2 <= minimumTime) {
-            collisionPlanes.push({ plane: [planeI, planeJ], distance: t1 });
-          // }
+                // Calcula a distância entre os dois aviões nas posições calculadas
+                const distance = this.distanceBetweenTwoPoints(posI.x, posI.y, posJ.x, posJ.y);
+
+                console.log(`Tempo: ${t.toFixed(1)}s, Distância entre aviões: ${distance.toFixed(2)} unidades`);
+
+                if (distance <= minimumTime) { // Se a distância for menor que epsilon, considera colisão
+                    collisionPlanes.push({
+                        plane: [planeI, planeJ],
+                        distance: t,
+                        message: `Colisão em rota após ${t.toFixed(2)} segundos no ponto (${posI.x.toFixed(2)}, ${posI.y.toFixed(2)})`
+                    });
+                    break; // Interrompe o loop se a colisão for detectada
+                }
+            }
         }
-      }
     }
 
     return collisionPlanes;
-  }
+}
+
 
   distanceBetweenTwoPoints(x1: number, y1: number, x2: number, y2: number) {
     const xDiff = x1 - x2;
