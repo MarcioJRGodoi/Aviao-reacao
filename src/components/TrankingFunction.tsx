@@ -56,6 +56,8 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 			return;
 		}
 
+		console.log("dsadas ",logic.checkCollision({planes: selectedPlanes}));
+
 		const distances = logic.planesInCollisionRoute({
 			minimumTime: timeToColision,
 			planes: selectedPlanes,

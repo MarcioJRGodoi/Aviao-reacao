@@ -46,7 +46,7 @@ export class LogicService {
     return resultPlanes;
   }
 
-  staggerDecimal(planes: { x: number; y: number }[], x: number, y: number) {
+  staggerDecimal(planes: Plane[], x: number, y: number) {
     return planes.map((plane) => ({
       ...plane,
       x: plane.x * x,
@@ -56,7 +56,7 @@ export class LogicService {
 
   planesClosestToAirport(
     airport: { x: number; y: number },
-    planes: { x: number; y: number }[],
+    planes: Plane[],
     minimumDistance: number
   ) {
     return planes
@@ -74,7 +74,7 @@ export class LogicService {
       for (let j = i + 1; j < planes.length; j++) {
         const distance = this.distanceBetweenTwoPoints(planes[i].x, planes[i].y, planes[j].x, planes[j].y);
         if (distance <= minimumDistance) {
-          closestPlanes.push({ plane: [planes[i], planes[j]], distance, message: `Avioes Proximos Distancia: ${distance.toFixed(2)} Km`  });
+          closestPlanes.push({ plane: [planes[i], planes[j]], distance, message: `Avioes Proximos Distancia: ${distance.toFixed(2)} Km` });
         }
       }
     }
@@ -82,7 +82,7 @@ export class LogicService {
     return closestPlanes;
   }
 
-  calculatedFinishPoint(plane: { x: number; y: number; velocity: number; direction: number }, time: number) {
+  calculatedFinishPoint(plane: Plane, time: number) {
     const distance = time * plane.velocity;
     const radians = (plane.direction * Math.PI) / 180;
     const x = plane.x + distance * Math.sin(radians);
@@ -91,65 +91,124 @@ export class LogicService {
     return { x, y };
   }
 
-  calculateFX(p1: { x: number; y: number }, p2: { x: number; y: number }) {
+  calculateFX(p1: Plane, p2: { x: number; y: number }) {
     const a = (p1.y - p2.y) / (p1.x - p2.x);
     const b = p1.y - a * p1.x;
     return { a, b };
   }
 
   calculateIntersectionPoint(
-    p1: { x: number; y: number },
+    p1: Plane,
     p2: { x: number; y: number },
-    p3: { x: number; y: number },
+    p3: Plane,
     p4: { x: number; y: number }
   ) {
     const f1 = this.calculateFX(p1, p2);
     const f2 = this.calculateFX(p3, p4);
     const x = (f2.b - f1.b) / (f1.a - f2.a);
     const y = f1.a * x + f1.b;
-
     return { x, y };
   }
 
-  calculateTiming(p1: { x: number; y: number }, p2: { x: number; y: number }, velocity: number) {
+  calculateTiming({ p1, p2, velocity }: { p1: Plane, p2: { x: number; y: number }, velocity: number }) {
+    console.log("P1:", p1, "P2:", p2, "Velocity:", velocity)
     return this.distanceBetweenTwoPoints(p1.x, p1.y, p2.x, p2.y) / velocity;
   }
 
   planesInCollisionRoute({ minimumTime, planes }: { planes: Plane[]; minimumTime: number }): Tracking[] {
     const collisionPlanes: Tracking[] = [];
-    const epsilon = 0.5; // Reduzido para maior precisão
 
     for (let i = 0; i < planes.length; i++) {
-        const planeI = planes[i];
+      const planeI = planes[i];
+      const pi2 = this.calculatedFinishPoint(planeI, minimumTime);
 
-        for (let j = i + 1; j < planes.length; j++) {
-            const planeJ = planes[j];
+      for (let j = i + 1; j < planes.length; j++) {
+        const planeJ = planes[j];
+        const pj2 = this.calculatedFinishPoint(planeJ, minimumTime);
+        const intersectionPoint = this.calculateIntersectionPoint(planeI, pi2, planeJ, pj2);
 
-            for (let t = 0; t <= minimumTime; t += 0.1) { // Incremento de tempo em 0.1 segundos
-                // Calcula a posição de cada avião após `t` segundos
-                const posI = this.calculatedFinishPoint(planeI, t);
-                const posJ = this.calculatedFinishPoint(planeJ, t);
+        if (intersectionPoint) {
+          const t1 = this.calculateTiming({ p1: planeI, p2: intersectionPoint, velocity: planeI.velocity });
+          const t2 = this.calculateTiming({ p1: planeJ, p2: intersectionPoint, velocity: planeJ.velocity });
 
-                // Calcula a distância entre os dois aviões nas posições calculadas
-                const distance = this.distanceBetweenTwoPoints(posI.x, posI.y, posJ.x, posJ.y);
-
-                console.log(`Tempo: ${t.toFixed(1)}s, Distância entre aviões: ${distance.toFixed(2)} unidades`);
-
-                if (distance <= minimumTime) { // Se a distância for menor que epsilon, considera colisão
-                    collisionPlanes.push({
-                        plane: [planeI, planeJ],
-                        distance: t,
-                        message: `Colisão em rota após ${t.toFixed(2)} segundos no ponto (${posI.x.toFixed(2)}, ${posI.y.toFixed(2)})`
-                    });
-                    break; // Interrompe o loop se a colisão for detectada
-                }
-            }
+          console.log("Timings:", t1, t2)
+          const epsilon = 0.001;
+          if (Math.abs(t1 - t2) < epsilon && t1 <= minimumTime && t2 <= minimumTime) {
+            collisionPlanes.push({ plane: [planeI, planeJ], distance: t1, message: `Colisao entre Avioes ${planeI.id} e ${planeJ.id} Tempo: ${t1.toFixed(2)} Hrs` });
+          }
         }
+      }
     }
 
     return collisionPlanes;
+  }
+
+  // Função para converter graus para radianos
+ toRadians(angle: number): number {
+  return angle * (Math.PI / 180);
 }
 
+// Função para calcular a posição de um avião em um tempo `t`
+ calculatePositionAtTime(plane: Plane, t: number): { x: number; y: number } {
+  const theta = this.toRadians(plane.direction);
+  const vx = plane.velocity * Math.cos(theta);
+  const vy = plane.velocity * Math.sin(theta);
+
+  return {
+      x: plane.x + vx * t,
+      y: plane.y + vy * t,
+  };
+}
+
+
+// Função para calcular os componentes de velocidade em x e y de um avião
+ getVelocityComponents(plane: Plane): { vx: number; vy: number } {
+  const theta = this.toRadians(plane.direction);
+  return {
+      vx: plane.velocity * Math.cos(theta),
+      vy: plane.velocity * Math.sin(theta),
+  };
+}
+
+calculateIntersectionTime(plane1: Plane, plane2: Plane): { tForX: number; tForY: number } | null {
+  const { vx: vx1, vy: vy1 } = this.getVelocityComponents(plane1);
+  const { vx: vx2, vy: vy2 } = this.getVelocityComponents(plane2);
+
+  // Diferenças iniciais de posição
+  const dx = plane2.x - plane1.x;
+  const dy = plane2.y - plane1.y;
+
+  // Velocidades relativas em x e y
+  const relativeVx = vx1 - vx2;
+  const relativeVy = vy1 - vy2;
+
+  // Calcula os tempos para que x e y coincidam
+  const tForX = dx / relativeVx;
+  const tForY = dy / relativeVy;
+
+  // Retorna os tempos para x e y
+  return { tForX, tForY };
+}
+
+checkCollision({planes}:{planes: Plane[]}): number | null {
+
+  const [plane1, plane2] = planes;
+
+
+  const intersectionTime = this.calculateIntersectionTime(plane1, plane2);
+
+  if (!intersectionTime) return null;
+
+  const { tForX, tForY } = intersectionTime;
+  const epsilon = 0.001;
+
+  // Verifica se os tempos são próximos o suficiente e positivos
+  if (Math.abs(tForX - tForY) < epsilon && tForX > 0) {
+      return tForX; // Retorna o tempo de colisão
+  }
+
+  return null; // Nenhuma colisão
+}
 
   distanceBetweenTwoPoints(x1: number, y1: number, x2: number, y2: number) {
     const xDiff = x1 - x2;
