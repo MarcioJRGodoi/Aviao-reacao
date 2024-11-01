@@ -8,7 +8,6 @@ export class PositionPlanesService {
   private planes: Plane[] = [];
   private selectedPlanes: Plane[] = [];
   private tracking: Tracking[] = [];
-  private radarState = 'initial';
   public a = 0;
 
   public getPlanes(): Plane[] {

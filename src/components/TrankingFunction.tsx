@@ -29,7 +29,7 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 		) as any;
 
 		console.log(distances);
-		positionPlanes.addTracking({tracking: distances});
+		positionPlanes.addTracking({ tracking: distances });
 		setDistanAirport(null);
 	};
 
@@ -42,7 +42,7 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 		) as any;
 
-		positionPlanes.addTracking({tracking: distances});
+		positionPlanes.addTracking({ tracking: distances });
 		setDistanNearly(null);
 	};
 
@@ -56,9 +56,9 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 			return;
 		}
 
-		console.log("dsadas ",logic.checkCollision({planes: selectedPlanes}));
+		console.log("dsadas ", logic.checkCollision({ planes: selectedPlanes }));
 
-		const distances = logic.checkCollision({planes: selectedPlanes})
+		const distances = logic.checkCollision({ planes: selectedPlanes })
 
 		positionPlanes.addTracking({ tracking: distances });
 		setTimeToColision(null);
@@ -70,7 +70,8 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 			<div className="col-span-4 border-4 p-4 border-white">
 				<div className="grid grid-rows-2 text-center mt-4">
 					<div>
-					
+
+						{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
 						<label className="text-white">Distância Mín: </label>
 						<input
 							className="w-16 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
@@ -79,9 +80,10 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 							onChange={(e) => setDistanAirport(Number(e.target.value))}
 						/>
 					</div>
-				
-					<button
-						  className="w-full bg-green-800 hover:bg-blue-700 text-white font-bold rounded"
+
+					{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+<button
+						className="w-full bg-green-800 hover:bg-blue-700 text-white font-bold rounded"
 						onClick={handleAirpotDistance}
 					>
 						Aviões próximos ao Aeroporto
@@ -92,8 +94,9 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 			<div className="col-span-4 border-4 p-4 border-white">
 				<div className="grid grid-rows-2 text-center mt-4">
 					<div>
-					
-						<label className="text-white">Distância Mín: </label>
+
+						{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
+<label className="text-white">Distância Mín: </label>
 						<input
 							className="w-16 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
 							type="number"
@@ -101,9 +104,10 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 							onChange={(e) => setDistanNearly(Number(e.target.value))}
 						/>
 					</div>
-				
-					<button
-						  className="w-full bg-green-800 hover:bg-blue-700 text-white font-bold rounded"
+
+					{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+<button
+						className="w-full bg-green-800 hover:bg-blue-700 text-white font-bold rounded"
 						onClick={handleNearlyPlanes}
 					>
 						Aviões Próximos
@@ -125,7 +129,7 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 					</div>
 					{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
 					<button
-						  className="w-full bg-green-800 hover:bg-blue-700 text-white font-bold rounded"
+						className="w-full bg-green-800 hover:bg-blue-700 text-white font-bold rounded"
 						onClick={handleColisionTime}
 					>
 						Em rota de colisão
