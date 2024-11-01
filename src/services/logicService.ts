@@ -190,24 +190,26 @@ calculateIntersectionTime(plane1: Plane, plane2: Plane): { tForX: number; tForY:
   return { tForX, tForY };
 }
 
-checkCollision({planes}:{planes: Plane[]}): number | null {
+checkCollision({planes}:{planes: Plane[]}): Tracking[] {
+  const collisionPlanes: Tracking[] = [];
 
   const [plane1, plane2] = planes;
 
 
   const intersectionTime = this.calculateIntersectionTime(plane1, plane2);
 
-  if (!intersectionTime) return null;
+  if (!intersectionTime) return collisionPlanes;
 
   const { tForX, tForY } = intersectionTime;
   const epsilon = 0.001;
 
   // Verifica se os tempos são próximos o suficiente e positivos
   if (Math.abs(tForX - tForY) < epsilon && tForX > 0) {
-      return tForX; // Retorna o tempo de colisão
-  }
+      collisionPlanes.push({ plane: [plane1, plane2], distance: tForX, message: `Colisao entre Avioes ${plane1.id} e ${plane2.id} Tempo: ${tForX.toFixed(2)} Hrs` });
+      return collisionPlanes;
+    }
 
-  return null; // Nenhuma colisão
+  return collisionPlanes; // Nenhuma colisão
 }
 
   distanceBetweenTwoPoints(x1: number, y1: number, x2: number, y2: number) {
