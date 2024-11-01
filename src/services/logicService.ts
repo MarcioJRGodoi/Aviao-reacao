@@ -144,73 +144,79 @@ export class LogicService {
   }
 
   // Função para converter graus para radianos
- toRadians(angle: number): number {
-  return angle * (Math.PI / 180);
-}
+  toRadians(angle: number): number {
+    return angle * (Math.PI / 180);
+  }
 
-// Função para calcular a posição de um avião em um tempo `t`
- calculatePositionAtTime(plane: Plane, t: number): { x: number; y: number } {
-  const theta = this.toRadians(plane.direction);
-  const vx = plane.velocity * Math.cos(theta);
-  const vy = plane.velocity * Math.sin(theta);
+  // Função para calcular a posição de um avião em um tempo `t`
+  calculatePositionAtTime(plane: Plane, t: number): { x: number; y: number } {
+    const theta = this.toRadians(plane.direction);
+    const vx = plane.velocity * Math.cos(theta);
+    const vy = plane.velocity * Math.sin(theta);
 
-  return {
+    return {
       x: plane.x + vx * t,
       y: plane.y + vy * t,
-  };
-}
+    };
+  }
 
 
-// Função para calcular os componentes de velocidade em x e y de um avião
- getVelocityComponents(plane: Plane): { vx: number; vy: number } {
-  const theta = this.toRadians(plane.direction);
-  return {
+  // Função para calcular os componentes de velocidade em x e y de um avião
+  getVelocityComponents(plane: Plane): { vx: number; vy: number } {
+    const theta = this.toRadians(plane.direction);
+    return {
       vx: plane.velocity * Math.cos(theta),
       vy: plane.velocity * Math.sin(theta),
-  };
-}
+    };
+  }
 
-calculateIntersectionTime(plane1: Plane, plane2: Plane): { tForX: number; tForY: number } | null {
-  const { vx: vx1, vy: vy1 } = this.getVelocityComponents(plane1);
-  const { vx: vx2, vy: vy2 } = this.getVelocityComponents(plane2);
+  calculateIntersectionTime(plane1: Plane, plane2: Plane): { tForX: number; tForY: number } | null {
+    const { vx: vx1, vy: vy1 } = this.getVelocityComponents(plane1);
+    const { vx: vx2, vy: vy2 } = this.getVelocityComponents(plane2);
 
-  // Diferenças iniciais de posição
-  const dx = plane2.x - plane1.x;
-  const dy = plane2.y - plane1.y;
+    // Diferenças iniciais de posição
+    const dx = plane2.x - plane1.x;
+    const dy = plane2.y - plane1.y;
 
-  // Velocidades relativas em x e y
-  const relativeVx = vx1 - vx2;
-  const relativeVy = vy1 - vy2;
+    // Velocidades relativas em x e y
+    const relativeVx = vx1 - vx2;
+    const relativeVy = vy1 - vy2;
 
-  // Calcula os tempos para que x e y coincidam
-  const tForX = dx / relativeVx;
-  const tForY = dy / relativeVy;
+    // Calcula os tempos para que x e y coincidam
+    const tForX = dx / relativeVx;
+    const tForY = dy / relativeVy;
 
-  // Retorna os tempos para x e y
-  return { tForX, tForY };
-}
+    // Retorna os tempos para x e y
+    return { tForX, tForY };
+  }
 
-checkCollision({planes}:{planes: Plane[]}): Tracking[] {
-  const collisionPlanes: Tracking[] = [];
+  checkCollision({ planes }: { planes: Plane[] }): Tracking[] {
+    const collisionPlanes: Tracking[] = [];
 
-  const [plane1, plane2] = planes;
+    const [plane1, plane2] = planes;
 
 
-  const intersectionTime = this.calculateIntersectionTime(plane1, plane2);
+    const intersectionTime = this.calculateIntersectionTime(plane1, plane2);
 
-  if (!intersectionTime) return collisionPlanes;
+    if (!intersectionTime) {
 
-  const { tForX, tForY } = intersectionTime;
-  const epsilon = 0.001;
+      collisionPlanes.push({ plane: [plane1, plane2], distance: 0, message: `Avioes ${plane1.id} e ${plane2.id} não colidem` });
+      return collisionPlanes
 
-  // Verifica se os tempos são próximos o suficiente e positivos
-  if (Math.abs(tForX - tForY) < epsilon && tForX > 0) {
+    };
+
+    const { tForX, tForY } = intersectionTime;
+    const epsilon = 0.001;
+
+    // Verifica se os tempos são próximos o suficiente e positivos
+    if (Math.abs(tForX - tForY) < epsilon && tForX > 0) {
       collisionPlanes.push({ plane: [plane1, plane2], distance: tForX, message: `Colisao entre Avioes ${plane1.id} e ${plane2.id} Tempo: ${tForX.toFixed(2)} Hrs` });
       return collisionPlanes;
     }
 
-  return collisionPlanes; // Nenhuma colisão
-}
+    collisionPlanes.push({ plane: [plane1, plane2], distance: 0, message: `Avioes ${plane1.id} e ${plane2.id} não colidem` });
+    return collisionPlanes; // Nenhuma colisão
+  }
 
   distanceBetweenTwoPoints(x1: number, y1: number, x2: number, y2: number) {
     const xDiff = x1 - x2;

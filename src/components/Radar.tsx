@@ -139,8 +139,8 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
   }, [positionPlane]);
 
   useEffect(() => {
-    positionPlane.addPlane({ x: 0, y: 0, direction: 45, color: "red",angle: 0, id: 0, radius: 0, velocity: 10 });
-    positionPlane.addPlane({ x: 30, y: 30, direction: 225, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
+    positionPlane.addPlane({ x: 0, y: 0, direction: 30, color: "red",angle: 0, id: 0, radius: 0, velocity: 10 });
+    positionPlane.addPlane({ x: 15, y: 20, direction: 150, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
   },[])
 
   
