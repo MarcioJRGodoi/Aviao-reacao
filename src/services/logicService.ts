@@ -208,7 +208,7 @@ export class LogicService {
     };
 
     const { tForX, tForY } = intersectionTime;
-    const epsilon = 0.001;
+    const epsilon = 0.2;
 
     // Verifica se os tempos são próximos o suficiente e positivos
     if (Math.abs(tForX - tForY) < epsilon && tForX > 0) {

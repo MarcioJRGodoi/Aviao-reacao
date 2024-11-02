@@ -141,19 +141,19 @@ const Radar: React.FC<RadarProps> = ({ positionPlane, logicService }) => {
     };
   }, [positionPlane]);
 
-  useEffect(() => {
-    // Atualização em intervalos regulares
-    const interval = setInterval(() => {
-     const colision =  positionPlane.updatePlanePositions();
-      if(colision.length > 0){
-        setCollisions(colision);
-      }
+  // useEffect(() => {
+  //   // Atualização em intervalos regulares
+  //   const interval = setInterval(() => {
+  //    const colision =  positionPlane.updatePlanePositions();
+  //     if(colision.length > 0){
+  //       setCollisions(colision);
+  //     }
 
-      setPlanes([...positionPlane.getPlanes()]);
-    }, 1000); // Atualiza a cada 100ms
+  //     setPlanes([...positionPlane.getPlanes()]);
+  //   }, 1000); // Atualiza a cada 100ms
 
-    return () => clearInterval(interval);
-  }, [positionPlane]);
+  //   return () => clearInterval(interval);
+  // }, [positionPlane]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -167,7 +167,7 @@ const Radar: React.FC<RadarProps> = ({ positionPlane, logicService }) => {
     // positionPlane.addPlane({ x: 30, y: 20, direction: 90, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
 
     // colisao com posicoes bem diferentes
-    positionPlane.addPlane({ x: 25, y: -5, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 20 });
+    positionPlane.addPlane({ x: 25, y: -8, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 20 });
     positionPlane.addPlane({ x: -5, y: 25, direction: 0, color: "blue",angle: 0, id: 1, radius: 0, velocity: 20 });
 
         // colisao com posicoes bem diferentes +
