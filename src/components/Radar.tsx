@@ -140,7 +140,7 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    positionPlane.addPlane({ x: 10, y: 5, direction: 180, color: "red",angle: 0, id: 0, radius: 0, velocity: 10 });
+    positionPlane.addPlane({ x: 10, y: 5, direction: 270, color: "red",angle: 0, id: 0, radius: 0, velocity: 10 });
     positionPlane.addPlane({ x: 5, y: 10, direction: 270, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
   },[])
 
@@ -148,10 +148,10 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
   const getAdjustedRotation = (direction: number): number => {
     if (direction >= 0 && direction < 45) {
       // Entre 0 e 45 graus: direita
-      return 90;
+      return direction + 90;
     }if (direction >= 45 && direction < 135) {
       // Entre 45 e 135 graus: cima
-      return 0;
+      return direction - 90;
     }  if (direction >= 135 && direction < 225) {
       // Entre 135 e 225 graus: esquerda
       return 270;
@@ -211,7 +211,7 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
               position: "absolute",
               top: `${fixY(plane.y)}px`,
               left: `${fixX(plane.x)}px`,
-              transform: `rotate(${getAdjustedRotation(plane.direction)}deg)`,
+              transform: `rotate(${90 - plane.direction}deg)`,
               cursor: "pointer",
             }}
           >
