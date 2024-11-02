@@ -55,7 +55,7 @@ private asyncdetectRealTimeCollision(): void {
       if (plane1.id !== plane2.id) {
         const distance = Math.sqrt((plane1.x - plane2.x) ** 2 + (plane1.y - plane2.y) ** 2);
         console.log("AAA", distance);
-        if (distance < 3) {
+        if (distance < 5 && distance !==0) {
           toast.error(`Colisão detectada entre os aviões ${plane1.id} e ${plane2.id}!`, { position: "top-right" });
           this.deletePlane(plane1);
           this.deletePlane(plane2);

@@ -160,8 +160,8 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
     // positionPlane.addPlane({ x: 30, y: 20, direction: 90, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
 
     // colisao com posicoes bem diferentes
-    positionPlane.addPlane({ x: 25, y: -5, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 10 });
-    positionPlane.addPlane({ x: -5, y: 25, direction: 0, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
+    positionPlane.addPlane({ x: 31, y: -5, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 20 });
+    positionPlane.addPlane({ x: -5, y: 30, direction: 0, color: "blue",angle: 0, id: 1, radius: 0, velocity: 20 });
 
         // colisao com posicoes bem diferentes +
         // positionPlane.addPlane({ x: 10, y: 0, direction: 90, color: "red", angle: 0, id: 0, radius: 0, velocity: 10 });  
