@@ -140,29 +140,10 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    positionPlane.addPlane({ x: 10, y: 5, direction: 270, color: "red",angle: 0, id: 0, radius: 0, velocity: 10 });
-    positionPlane.addPlane({ x: 5, y: 10, direction: 270, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
+    positionPlane.addPlane({ x: 10, y: 5, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 10 });
+    positionPlane.addPlane({ x: 5, y: 10, direction: 0, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
   },[])
 
-
-  const getAdjustedRotation = (direction: number): number => {
-    if (direction >= 0 && direction < 45) {
-      // Entre 0 e 45 graus: direita
-      return direction + 90;
-    }if (direction >= 45 && direction < 135) {
-      // Entre 45 e 135 graus: cima
-      return direction - 90;
-    }  if (direction >= 135 && direction < 225) {
-      // Entre 135 e 225 graus: esquerda
-      return 270;
-    }  if (direction >= 225 && direction < 315) {
-      // Entre 225 e 315 graus: baixo
-      return 180;
-    }
-      // Entre 315 e 360 graus: direita
-      return 0;
-  };
-  
 
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const selectPlane = (plane: any) => {
