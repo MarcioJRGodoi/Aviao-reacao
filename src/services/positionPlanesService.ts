@@ -42,9 +42,29 @@ public updatePlanePositions(): void {
       this.deletePlane(plane); // Remova ou tome uma ação apropriada
     }
   });
-
+  this.asyncdetectRealTimeCollision(); // Verifica se houve colisão
   this.notifyChange(); // Notifica as mudanças após a atualização
 }
+
+// funcao que verifica nas posicoes atuais sem fazer progressao se eles se colidiram
+private asyncdetectRealTimeCollision(): void {
+  // biome-ignore lint/complexity/noForEach: <explanation>
+  this.planes.forEach((plane1) => {
+    // biome-ignore lint/complexity/noForEach: <explanation>
+    this.planes.forEach((plane2) => {
+      if (plane1.id !== plane2.id) {
+        const distance = Math.sqrt((plane1.x - plane2.x) ** 2 + (plane1.y - plane2.y) ** 2);
+        console.log("AAA", distance);
+        if (distance < 3) {
+          toast.error(`Colisão detectada entre os aviões ${plane1.id} e ${plane2.id}!`, { position: "top-right" });
+          this.deletePlane(plane1);
+          this.deletePlane(plane2);
+        }
+      }
+    });
+  });
+}
+  
 
 public notifyChange(): void {
   // biome-ignore lint/complexity/noForEach: <explanation>
