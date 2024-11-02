@@ -24,6 +24,28 @@ public unsubscribeOnChange(callback: () => void): void {
   this.onChangeCallbacks = this.onChangeCallbacks.filter(cb => cb !== callback);
 }
 
+public updatePlanePositions(): void {
+  const movementFactor = 0.1; // Reduz o deslocamento em cada ciclo
+  
+  // biome-ignore lint/complexity/noForEach: <explanation>
+    this.planes.forEach((plane) => {
+    const angleInRadians = (plane.direction * Math.PI) / 180;
+    const speed = (plane.velocity || 1) * movementFactor;
+
+    // Atualiza a posição do avião com base na direção e velocidade escalada
+    plane.x += speed * Math.cos(angleInRadians);
+    plane.y += speed * Math.sin(angleInRadians);
+
+    // Valida se o avião ainda está dentro do radar
+    if (!this.isValidPlane(plane)) {
+      toast.error('Avião saiu do alcance do radar!', { position: "top-right" });
+      this.deletePlane(plane); // Remova ou tome uma ação apropriada
+    }
+  });
+
+  this.notifyChange(); // Notifica as mudanças após a atualização
+}
+
 public notifyChange(): void {
   // biome-ignore lint/complexity/noForEach: <explanation>
   this.onChangeCallbacks.forEach((callback) => callback());

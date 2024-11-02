@@ -138,6 +138,16 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
     };
   }, [positionPlane]);
 
+  useEffect(() => {
+    // Atualização em intervalos regulares
+    const interval = setInterval(() => {
+      positionPlane.updatePlanePositions();
+      setPlanes([...positionPlane.getPlanes()]);
+    }, 1500); // Atualiza a cada 100ms
+
+    return () => clearInterval(interval);
+  }, [positionPlane]);
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
 
@@ -152,11 +162,14 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
     // colisao com posicoes bem diferentes
     positionPlane.addPlane({ x: 10, y: -5, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 10 });
     positionPlane.addPlane({ x: -5, y: 10, direction: 0, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
+
+        // colisao com posicoes bem diferentes +
+        // positionPlane.addPlane({ x: 10, y: 0, direction: 90, color: "red", angle: 0, id: 0, radius: 0, velocity: 10 });  
+        // positionPlane.addPlane({ x: 0, y: 0, direction: 45, color: "blue", angle: 0, id: 1, radius: 0, velocity: 10 });  
   },[])
 
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const selectPlane = (plane: any) => {
+  const selectPlane = (plane: Plane) => {
     if (positionPlane.checkIsSelected(plane)) {
       positionPlane.unselectPlane(plane);
     } else {

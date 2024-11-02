@@ -11,7 +11,7 @@ import { LogicService } from '../services/logicService';
 import './CSS/cssMenu.css';
 
 const Menu: React.FC = () => {
-  const [state, setState] = useState<'initial' | 'final'>('initial');
+  const [_state, setState] = useState<'initial' | 'final'>('initial');
 
   // Usando useRef para instanciar uma única vez
   const positionPlanesRef = useRef(new PositionPlanesService());
