@@ -24,7 +24,7 @@ public unsubscribeOnChange(callback: () => void): void {
   this.onChangeCallbacks = this.onChangeCallbacks.filter(cb => cb !== callback);
 }
 
-public updatePlanePositions(): void {
+public updatePlanePositions(): { x: number; y: number }[]  {
   const movementFactor = 0.1; // Reduz o deslocamento em cada ciclo
   
   // biome-ignore lint/complexity/noForEach: <explanation>
@@ -42,12 +42,16 @@ public updatePlanePositions(): void {
       this.deletePlane(plane); // Remova ou tome uma ação apropriada
     }
   });
-  this.asyncdetectRealTimeCollision(); // Verifica se houve colisão
+  const colision  = this.asyncdetectRealTimeCollision(); // Verifica se houve colisão
+
   this.notifyChange(); // Notifica as mudanças após a atualização
+
+  return colision;
 }
 
 // funcao que verifica nas posicoes atuais sem fazer progressao se eles se colidiram
-private asyncdetectRealTimeCollision(): void {
+private asyncdetectRealTimeCollision(): { x: number; y: number }[] {
+  const collisions: { x: number; y: number }[] = [];
   // biome-ignore lint/complexity/noForEach: <explanation>
   this.planes.forEach((plane1) => {
     // biome-ignore lint/complexity/noForEach: <explanation>
@@ -55,14 +59,23 @@ private asyncdetectRealTimeCollision(): void {
       if (plane1.id !== plane2.id) {
         const distance = Math.sqrt((plane1.x - plane2.x) ** 2 + (plane1.y - plane2.y) ** 2);
         console.log("AAA", distance);
-        if (distance < 5 && distance !==0) {
+        if (distance < 5 && distance !== 0) {
           toast.error(`Colisão detectada entre os aviões ${plane1.id} e ${plane2.id}!`, { position: "top-right" });
+          // this.addTracking({
+          //   tracking: [{
+          //     plane: [plane1, plane2],
+          //     distance: 0,
+          //     message: `Colisao entre Avioes ${collisions[0].x} e ${collisions[0].y} Tempo: ${0} Hrs`
+          //   }]
+          // })
           this.deletePlane(plane1);
           this.deletePlane(plane2);
+          collisions.push({ x: plane1.x, y: plane1.y });
         }
       }
     });
   });
+  return collisions;
 }
   
 

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import type { PositionPlanesService } from "../services/positionPlanesService";
 import type { Plane } from "../interfaces";
+import type { LogicService } from "../services/logicService";
 
 // Efeito de expansão para o radar
 const radarSweep = keyframes`
@@ -119,11 +120,13 @@ const Palito = styled.div`
 
 interface RadarProps {
   positionPlane: PositionPlanesService;
+  logicService: LogicService;
 }
 
-const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
+const Radar: React.FC<RadarProps> = ({ positionPlane, logicService }) => {
   const [isInitial, _setIsInitial] = useState(true);
   const [_planes, setPlanes] = useState<Plane[]>(positionPlane.getPlanes());
+  const [collisions, setCollisions] = useState<{ x: number; y: number }[]>([]);
 
   useEffect(() => {
 
@@ -141,7 +144,11 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
   useEffect(() => {
     // Atualização em intervalos regulares
     const interval = setInterval(() => {
-      positionPlane.updatePlanePositions();
+     const colision =  positionPlane.updatePlanePositions();
+      if(colision.length > 0){
+        setCollisions(colision);
+      }
+
       setPlanes([...positionPlane.getPlanes()]);
     }, 1000); // Atualiza a cada 100ms
 
@@ -160,8 +167,8 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
     // positionPlane.addPlane({ x: 30, y: 20, direction: 90, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
 
     // colisao com posicoes bem diferentes
-    positionPlane.addPlane({ x: 31, y: -5, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 20 });
-    positionPlane.addPlane({ x: -5, y: 30, direction: 0, color: "blue",angle: 0, id: 1, radius: 0, velocity: 20 });
+    positionPlane.addPlane({ x: 25, y: -5, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 20 });
+    positionPlane.addPlane({ x: -5, y: 25, direction: 0, color: "blue",angle: 0, id: 1, radius: 0, velocity: 20 });
 
         // colisao com posicoes bem diferentes +
         // positionPlane.addPlane({ x: 10, y: 0, direction: 90, color: "red", angle: 0, id: 0, radius: 0, velocity: 10 });  
@@ -231,6 +238,34 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
             </svg>
           </div>
         ))}
+{collisions.map((collision, index) => (
+  // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
+<svg
+    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+    key={index}
+    style={{
+      position: "absolute",
+      top: `${fixY(collision.y)}px`,
+      left: `${fixX(collision.x)}px`,
+      pointerEvents: "none" // Para que o X não interfira nos cliques nas aeronaves
+    }}
+    width="30"
+    height="30"
+  >
+    <line
+      x1="5" y1="5" x2="25" y2="25"
+      stroke="red"
+      strokeWidth="3"
+      strokeLinecap="round"
+    />
+    <line
+      x1="25" y1="5" x2="5" y2="25"
+      stroke="red"
+      strokeWidth="3"
+      strokeLinecap="round"
+    />
+  </svg>
+))}
       </div>
     </RadarContainer>
   );
