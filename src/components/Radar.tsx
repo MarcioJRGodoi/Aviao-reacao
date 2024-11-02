@@ -140,8 +140,18 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    positionPlane.addPlane({ x: 10, y: 5, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 10 });
-    positionPlane.addPlane({ x: 5, y: 10, direction: 0, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
+
+    //um atras do outro
+    // positionPlane.addPlane({ x: 0, y: 50, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 5 });
+    // positionPlane.addPlane({ x: 0, y: 20, direction: 90, color: "blue",angle: 0, id: 1, radius: 0, velocity: 100 });
+
+    // um do lado do outro
+    // positionPlane.addPlane({ x: 10, y: 20, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 10 });
+    // positionPlane.addPlane({ x: 30, y: 20, direction: 90, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
+
+    // colisao com posicoes bem diferentes
+    positionPlane.addPlane({ x: 10, y: -5, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 10 });
+    positionPlane.addPlane({ x: -5, y: 10, direction: 0, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
   },[])
 
 
