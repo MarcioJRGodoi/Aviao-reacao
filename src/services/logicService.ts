@@ -63,8 +63,10 @@ export class LogicService {
       .map((plane) => ({
         plane,
         distance: this.distanceBetweenTwoPoints(airport.x, airport.y, plane.x, plane.y),
+        message: `Aviao ${plane.id} Distancia do Aeroporto: ${this.distanceBetweenTwoPoints(airport.x, airport.y, plane.x, plane.y).toFixed(2)} Km`
       }))
-      .filter((item) => item.distance <= minimumDistance);
+      .filter((item) => item.distance <= minimumDistance) as unknown as Tracking[];
+
   }
 
   planesClosestToPlanes(planes: Plane[], minimumDistance: number): Tracking[] {

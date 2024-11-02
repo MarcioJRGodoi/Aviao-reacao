@@ -38,15 +38,17 @@ const ReportComponent: React.FC<RadarProps> = ({ positionPlane }) => {
 
       <div className="grid grid-cols-12 gap-4 p-2 text-white text-center font-bold">
         {trackingData.map((tracking, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
           <div key={index} className="overflow-y-scroll col-span-12 grid grid-cols-12 p-1 cursor-pointer border-2 border-white text-white">
             {/* <div className="col-span-4">{tracking.distance ? tracking.distance.toFixed(2) : 0}</div> */}
             <div className="col-span-8">{tracking.message || ""}</div>
             {isArray(tracking.plane ?? []) ? (
               <div className="col-span-4">
                 <div className="inline-flex">
-                  {tracking.plane?.map((plane, idx) => (
+                  {tracking.plane?.map((plane) => (
+                    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
                     <svg
-                      key={idx}
+                      key={plane.id}
                       className="h-6 px-1 m-auto"
                       fill={plane.color}
                       viewBox="0 0 512.043 512.043"
@@ -66,6 +68,7 @@ const ReportComponent: React.FC<RadarProps> = ({ positionPlane }) => {
               </div>
             ) : (
               <div className="col-span-4">
+                {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
                 <svg className="h-6 m-auto" fill={(tracking.plane as unknown as Plane).color} viewBox="0 0 512.043 512.043">
                   <path d="M496.469,353.365l-197.781-197.76V67.904c0-13.845-3.072-27.797-9.131-40.811l-4.501-8.533
                            C279.744,7.104,268.629,0,256.021,0s-23.723,7.104-28.8,18.069l-4.971,9.493c-5.824,12.544-8.896,26.475-8.896,40.341v87.701
