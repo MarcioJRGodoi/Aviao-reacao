@@ -41,7 +41,7 @@ const Menu: React.FC = () => {
           <div className="button" onClick={changeState}>
             Limpar Dados
           </div>
-          <Radar positionPlane={positionPlanesRef.current} logicService={logicServiceRef.current} />
+          <Radar positionPlane={positionPlanesRef.current} />
         </div>
         <div className="row-span-2 col-span-6">
           <h1 className="text-white font-bold text-center text-md">DataGrid</h1>

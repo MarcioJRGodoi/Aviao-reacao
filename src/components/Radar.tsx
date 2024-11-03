@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import type { PositionPlanesService } from "../services/positionPlanesService";
 import type { Plane } from "../interfaces";
-import type { LogicService } from "../services/logicService";
 
 // Efeito de expansão para o radar
 const radarSweep = keyframes`
@@ -120,10 +119,9 @@ const Palito = styled.div`
 
 interface RadarProps {
   positionPlane: PositionPlanesService;
-  logicService: LogicService;
 }
 
-const Radar: React.FC<RadarProps> = ({ positionPlane, logicService }) => {
+const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
   const [isInitial, _setIsInitial] = useState(true);
   const [_planes, setPlanes] = useState<Plane[]>(positionPlane.getPlanes());
   const [collisions, setCollisions] = useState<{ x: number; y: number }[]>([]);
@@ -141,39 +139,38 @@ const Radar: React.FC<RadarProps> = ({ positionPlane, logicService }) => {
     };
   }, [positionPlane]);
 
-  // useEffect(() => {
-  //   // Atualização em intervalos regulares
-  //   const interval = setInterval(() => {
-  //    const colision =  positionPlane.updatePlanePositions();
-  //     if(colision.length > 0){
-  //       setCollisions(colision);
-  //     }
-
-  //     setPlanes([...positionPlane.getPlanes()]);
-  //   }, 1000); // Atualiza a cada 100ms
-
-  //   return () => clearInterval(interval);
-  // }, [positionPlane]);
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
+    // Atualização em intervalos regulares
+    const interval = setInterval(() => {
+     const colision =  positionPlane.updatePlanePositions();
+      if(colision.length > 0){
+        setCollisions(colision);
+      }
 
-    //um atras do outro
-    // positionPlane.addPlane({ x: 0, y: 50, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 5 });
-    // positionPlane.addPlane({ x: 0, y: 20, direction: 90, color: "blue",angle: 0, id: 1, radius: 0, velocity: 100 });
+      setPlanes([...positionPlane.getPlanes()]);
+    }, 1000); // Atualiza a cada 100ms
 
-    // um do lado do outro
-    // positionPlane.addPlane({ x: 10, y: 20, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 10 });
-    // positionPlane.addPlane({ x: 30, y: 20, direction: 90, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
+    return () => clearInterval(interval);
+  }, [positionPlane]);
 
-    // colisao com posicoes bem diferentes
-    positionPlane.addPlane({ x: 25, y: -8, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 20 });
-    positionPlane.addPlane({ x: -5, y: 25, direction: 0, color: "blue",angle: 0, id: 1, radius: 0, velocity: 20 });
+  // useEffect(() => {
 
-        // colisao com posicoes bem diferentes +
-        // positionPlane.addPlane({ x: 10, y: 0, direction: 90, color: "red", angle: 0, id: 0, radius: 0, velocity: 10 });  
-        // positionPlane.addPlane({ x: 0, y: 0, direction: 45, color: "blue", angle: 0, id: 1, radius: 0, velocity: 10 });  
-  },[])
+  //   //um atras do outro
+  //   // positionPlane.addPlane({ x: 0, y: 50, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 5 });
+  //   // positionPlane.addPlane({ x: 0, y: 20, direction: 90, color: "blue",angle: 0, id: 1, radius: 0, velocity: 100 });
+
+  //   // um do lado do outro
+  //   // positionPlane.addPlane({ x: 10, y: 20, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 10 });
+  //   // positionPlane.addPlane({ x: 30, y: 20, direction: 90, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
+
+  //   // colisao com posicoes bem diferentes
+  //   positionPlane.addPlane({ x: 25, y: -8, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 20 });
+  //   positionPlane.addPlane({ x: -5, y: 25, direction: 0, color: "blue",angle: 0, id: 1, radius: 0, velocity: 20 });
+
+  //       // colisao com posicoes bem diferentes +
+  //       // positionPlane.addPlane({ x: 10, y: 0, direction: 90, color: "red", angle: 0, id: 0, radius: 0, velocity: 10 });  
+  //       // positionPlane.addPlane({ x: 0, y: 0, direction: 45, color: "blue", angle: 0, id: 1, radius: 0, velocity: 10 });  
+  // },[])
 
 
   const selectPlane = (plane: Plane) => {
