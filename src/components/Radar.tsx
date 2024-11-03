@@ -153,7 +153,8 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
     return () => clearInterval(interval);
   }, [positionPlane]);
 
-  // useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
 
   //   //um atras do outro
   //   // positionPlane.addPlane({ x: 0, y: 50, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 5 });
@@ -164,13 +165,13 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
   //   // positionPlane.addPlane({ x: 30, y: 20, direction: 90, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
 
   //   // colisao com posicoes bem diferentes
-  //   positionPlane.addPlane({ x: 25, y: -8, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 20 });
-  //   positionPlane.addPlane({ x: -5, y: 25, direction: 0, color: "blue",angle: 0, id: 1, radius: 0, velocity: 20 });
+    positionPlane.addPlane({ x: 50, y: -8, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 20 });
+    positionPlane.addPlane({ x: -5, y: 50, direction: 0, color: "blue",angle: 0, id: 1, radius: 0, velocity: 20 });
 
-  //       // colisao com posicoes bem diferentes +
-  //       // positionPlane.addPlane({ x: 10, y: 0, direction: 90, color: "red", angle: 0, id: 0, radius: 0, velocity: 10 });  
-  //       // positionPlane.addPlane({ x: 0, y: 0, direction: 45, color: "blue", angle: 0, id: 1, radius: 0, velocity: 10 });  
-  // },[])
+        // colisao com posicoes bem diferentes +
+        // positionPlane.addPlane({ x: 100, y: 0, direction: 90, color: "red", angle: 0, id: 0, radius: 0, velocity: 50 });  
+        // positionPlane.addPlane({ x: 0, y: 0, direction: 45, color: "blue", angle: 0, id: 1, radius: 0, velocity: 50 });  
+  },[])
 
 
   const selectPlane = (plane: Plane) => {
@@ -180,8 +181,8 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
       positionPlane.selectPlane(plane);
     }
   };
-  const fixX = (x: number) => (x * 2) + 299 - 15; // Reduza de 60 para 30, por exemplo
-  const fixY = (y: number) => (y * -2) + 299 - 15;
+  const fixX = (x: number) => (x * 0.9) + 299 - 15; // Reduza de 60 para 30, por exemplo
+  const fixY = (y: number) => (y * -0.9) + 299 - 15;
 
   return (
     <RadarContainer isInitial={isInitial}>
