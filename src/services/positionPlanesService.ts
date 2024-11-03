@@ -38,7 +38,6 @@ public updatePlanePositions(): { x: number; y: number }[]  {
 
     // Valida se o avião ainda está dentro do radar
     if (!this.isValidPlane(plane)) {
-      toast.error('Avião saiu do alcance do radar!', { position: "top-right" });
       this.deletePlane(plane); // Remova ou tome uma ação apropriada
     }
   });
@@ -61,16 +60,16 @@ private asyncdetectRealTimeCollision(): { x: number; y: number }[] {
         console.log("AAA", distance);
         if (distance < 5 && distance !== 0) {
           toast.error(`Colisão detectada entre os aviões ${plane1.id} e ${plane2.id}!`, { position: "top-right" });
-          // this.addTracking({
-          //   tracking: [{
-          //     plane: [plane1, plane2],
-          //     distance: 0,
-          //     message: `Colisao entre Avioes ${collisions[0].x} e ${collisions[0].y} Tempo: ${0} Hrs`
-          //   }]
-          // })
           this.deletePlane(plane1);
           this.deletePlane(plane2);
           collisions.push({ x: plane1.x, y: plane1.y });
+          this.addTracking({
+            tracking: [{
+              plane: [plane1, plane2],
+              distance: 0,
+              message: `Colisao entre Avioes ${plane1.id} e ${plane2.id} na posição x: ${plane1.x} y: ${plane1.y}`
+            }]
+          })
         }
       }
     });
