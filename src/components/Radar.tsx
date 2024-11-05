@@ -172,7 +172,7 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
   //       // positionPlane.addPlane({ x: 100, y: 0, direction: 90, color: "red", angle: 0, id: 0, radius: 0, velocity: 50 });  
   //       // positionPlane.addPlane({ x: 0, y: 0, direction: 45, color: "blue", angle: 0, id: 1, radius: 0, velocity: 50 });  
   // },[])
-
+// comentario importante 
 
   const selectPlane = (plane: Plane) => {
     if (positionPlane.checkIsSelected(plane)) {
