@@ -72,7 +72,7 @@ const TransformationFunction: React.FC<TransformationFunctionProps> = ({ positio
             {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
             <label className="text-white">X: </label>
             <input
-              className="w-8/12 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+              className="w-8/12 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline"
               type="number"
               value={xMove ?? ''}
               onChange={(e) => setXMove(Number(e.target.value))}
@@ -83,7 +83,7 @@ const TransformationFunction: React.FC<TransformationFunctionProps> = ({ positio
             {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
             <label className="text-white">Y: </label>
             <input
-              className="w-8/12 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+              className="w-8/12 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline"
               type="number"
               value={yMove ?? ''}
               onChange={(e) => setYMove(Number(e.target.value))}
@@ -104,7 +104,7 @@ const TransformationFunction: React.FC<TransformationFunctionProps> = ({ positio
             {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
             <label className="text-white">X: </label>
             <input
-              className="w-8/12 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+              className="w-8/12 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline"
               type="number"
               value={xStagger ?? ''}
               onChange={(e) => setXStagger(Number(e.target.value))}
@@ -115,7 +115,7 @@ const TransformationFunction: React.FC<TransformationFunctionProps> = ({ positio
             {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
             <label className="text-white">Y: </label>
             <input
-              className="w-8/12 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+              className="w-8/12 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline"
               type="number"
               value={yStagger ?? ''}
               onChange={(e) => setYStagger(Number(e.target.value))}
@@ -136,7 +136,7 @@ const TransformationFunction: React.FC<TransformationFunctionProps> = ({ positio
             {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
             <label className="text-white">Ângulo: </label>
             <input
-              className="absolute right-0 w-16 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+              className="absolute right-0 w-16 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline"
               type="number"
               value={angle ?? ''}
               onChange={(e) => setAngle(Number(e.target.value))}
@@ -161,7 +161,7 @@ const TransformationFunction: React.FC<TransformationFunctionProps> = ({ positio
                 {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
                 <label className="text-white">X: </label>
                 <input
-                  className="w-8/12 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+                  className="w-8/12 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline"
                   type="number"
                   value={xRotate ?? ''}
                   onChange={(e) => setXRotate(Number(e.target.value))}
@@ -172,7 +172,7 @@ const TransformationFunction: React.FC<TransformationFunctionProps> = ({ positio
                 {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
                 <label className="text-white">Y: </label>
                 <input
-                  className="w-8/12 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+                  className="w-8/12 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline"
                   type="number"
                   value={yRotate ?? ''}
                   onChange={(e) => setYRotate(Number(e.target.value))}

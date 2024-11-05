@@ -77,7 +77,7 @@ const DataInput: React.FC<DataInputProps> = ({ radar }) => {
           {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
           <label className="text-white">X: </label>
           <input
-            className="absolute right-0 w-16 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+            className="absolute right-0 w-16 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline"
             type="number"
             value={x ?? ""}
             onChange={(e) => setX(Number(e.target.value))}
@@ -89,7 +89,7 @@ const DataInput: React.FC<DataInputProps> = ({ radar }) => {
           {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
           <label className="text-white">Y: </label>
           <input
-            className="absolute right-0 w-16 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+            className="absolute right-0 w-16 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline"
             type="number"
             value={y ?? ""}
             onChange={(e) => setY(Number(e.target.value))}
@@ -101,7 +101,7 @@ const DataInput: React.FC<DataInputProps> = ({ radar }) => {
           {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
           <label className="text-white">Raio: </label>
           <input
-            className="absolute right-0 w-16 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+            className="absolute right-0 w-16 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline"
             type="number"
             value={radius ?? ""}
             onChange={(e) => setRadius(Number(e.target.value))}
@@ -113,7 +113,7 @@ const DataInput: React.FC<DataInputProps> = ({ radar }) => {
           {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
           <label className="text-white">Ângulo: </label>
           <input
-            className="absolute right-0 w-16 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+            className="absolute right-0 w-16 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline"
             type="number"
             value={angle ?? ""}
             onChange={(e) => setAngle(Number(e.target.value))}
@@ -125,7 +125,7 @@ const DataInput: React.FC<DataInputProps> = ({ radar }) => {
           {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
           <label className="text-white">Velocidade: </label>
           <input
-            className="absolute right-0 w-16 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+            className="absolute right-0 w-16 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline"
             type="number"
             value={velocity ?? ""}
             onChange={(e) => setVelocity(Number(e.target.value))}
@@ -136,7 +136,7 @@ const DataInput: React.FC<DataInputProps> = ({ radar }) => {
           {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
           <label className="text-white">Direção: </label>
           <input
-            className="absolute right-0 w-16 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+            className="absolute right-0 w-16 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline"
             type="number"
             value={direction ?? ""}
             onChange={(e) => setDirection(Number(e.target.value))}

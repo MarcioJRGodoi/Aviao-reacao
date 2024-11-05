@@ -74,7 +74,7 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 						{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
 						<label className="text-white">Distância Mín: </label>
 						<input
-							className="w-16 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+							className="w-16 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline mb-4"
 							type="number"
 							value={distanAirport ?? ""}
 							onChange={(e) => setDistanAirport(Number(e.target.value))}
@@ -82,7 +82,7 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 					</div>
 
 					{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-<button
+					<button
 						className="w-full bg-green-800 hover:bg-blue-700 text-white font-bold rounded"
 						onClick={handleAirpotDistance}
 					>
@@ -98,7 +98,7 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 						{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
 <label className="text-white">Distância Mín: </label>
 						<input
-							className="w-16 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+							className="w-16 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline mb-4"
 							type="number"
 							value={distanNearly ?? ""}
 							onChange={(e) => setDistanNearly(Number(e.target.value))}
@@ -121,7 +121,7 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 						{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
 						<label className="text-white">Tempo Mín.: </label>
 						<input
-							className="w-16 shadow appearance-none border rounded text-gray-700 focus:outline-none focus:shadow-outline"
+							className="w-16 shadow appearance-none border rounded text-gray-700 bg-white focus:outline-none focus:shadow-outline mb-4"
 							type="number"
 							value={timeToColision ?? ""}
 							onChange={(e) => setTimeToColision(Number(e.target.value))}
