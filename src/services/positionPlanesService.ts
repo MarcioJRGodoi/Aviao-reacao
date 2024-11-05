@@ -38,7 +38,7 @@ public updatePlanePositions(): { x: number; y: number }[]  {
 
     // Valida se o avião ainda está dentro do radar
     if (!this.isValidPlane(plane)) {
-      this.deletePlane(plane); // Remova ou tome uma ação apropriada
+      this.deletePlane(plane); // Remova
     }
   });
   const colision  = this.asyncdetectRealTimeCollision(); // Verifica se houve colisão
