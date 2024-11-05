@@ -153,25 +153,25 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
     return () => clearInterval(interval);
   }, [positionPlane]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
+  // // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // useEffect(() => {
 
-  //   //um atras do outro
-  //   // positionPlane.addPlane({ x: 0, y: 50, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 5 });
-  //   // positionPlane.addPlane({ x: 0, y: 20, direction: 90, color: "blue",angle: 0, id: 1, radius: 0, velocity: 100 });
+  // //   //um atras do outro
+  // //   // positionPlane.addPlane({ x: 0, y: 50, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 5 });
+  // //   // positionPlane.addPlane({ x: 0, y: 20, direction: 90, color: "blue",angle: 0, id: 1, radius: 0, velocity: 100 });
 
-  //   // um do lado do outro
-  //   // positionPlane.addPlane({ x: 10, y: 20, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 10 });
-  //   // positionPlane.addPlane({ x: 30, y: 20, direction: 90, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
+  // //   // um do lado do outro
+  // //   // positionPlane.addPlane({ x: 10, y: 20, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 10 });
+  // //   // positionPlane.addPlane({ x: 30, y: 20, direction: 90, color: "blue",angle: 0, id: 1, radius: 0, velocity: 10 });
 
-  //   // colisao com posicoes bem diferentes
-    positionPlane.addPlane({ x: 50, y: -8, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 50 });
-    positionPlane.addPlane({ x: -5, y: 50, direction: 0, color: "blue",angle: 0, id: 1, radius: 0, velocity: 50 });
+  // //   // colisao com posicoes bem diferentes
+  //   positionPlane.addPlane({ x: 50, y: -8, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 50 });
+  //   positionPlane.addPlane({ x: -5, y: 50, direction: 0, color: "blue",angle: 0, id: 1, radius: 0, velocity: 50 });
 
-        // colisao com posicoes bem diferentes +
-        // positionPlane.addPlane({ x: 100, y: 0, direction: 90, color: "red", angle: 0, id: 0, radius: 0, velocity: 50 });  
-        // positionPlane.addPlane({ x: 0, y: 0, direction: 45, color: "blue", angle: 0, id: 1, radius: 0, velocity: 50 });  
-  },[])
+  //       // colisao com posicoes bem diferentes +
+  //       // positionPlane.addPlane({ x: 100, y: 0, direction: 90, color: "red", angle: 0, id: 0, radius: 0, velocity: 50 });  
+  //       // positionPlane.addPlane({ x: 0, y: 0, direction: 45, color: "blue", angle: 0, id: 1, radius: 0, velocity: 50 });  
+  // },[])
 
 
   const selectPlane = (plane: Plane) => {
