@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import DataInput from './DataInput';
 import TransformationFunction from './TransformationFunction';
 import TrackingFunction from './TrankingFunction';
@@ -9,6 +9,8 @@ import Report from './Report';
 import { PositionPlanesService } from '../services/positionPlanesService';
 import { LogicService } from '../services/logicService';
 import './CSS/cssMenu.css';
+import { sendCollisionCheck } from '../services/cron';
+
 
 const Menu: React.FC = () => {
   const [_state, setState] = useState<'initial' | 'final'>('initial');
@@ -16,6 +18,17 @@ const Menu: React.FC = () => {
   // Usando useRef para instanciar uma única vez
   const positionPlanesRef = useRef(new PositionPlanesService());
   const logicServiceRef = useRef(new LogicService());
+
+  // Configuração do efeito para simular o cron job
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      console.log('Executando verificação de colisão de aviões...');
+      sendCollisionCheck({ positionPlaneService: positionPlanesRef.current });
+    }, 30000); // Intervalo de 1 minuto (60000 ms)
+
+    // Limpeza do intervalo ao desmontar o componente
+    return () => clearInterval(intervalId);
+  }, []); // Array de dependências vazio para rodar apenas uma vez na montagem
 
   const changeState = () => {
     setState((prevState) => (prevState === 'initial' ? 'final' : 'initial'));

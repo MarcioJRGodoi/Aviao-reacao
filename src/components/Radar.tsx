@@ -139,19 +139,19 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
     };
   }, [positionPlane]);
 
-  useEffect(() => {
-    // Atualização em intervalos regulares
-    const interval = setInterval(() => {
-     const colision =  positionPlane.updatePlanePositions();
-      if(colision.length > 0){
-        setCollisions(colision);
-      }
+  // useEffect(() => {
+  //   // Atualização em intervalos regulares
+  //   const interval = setInterval(() => {
+  //    const colision =  positionPlane.updatePlanePositions();
+  //     if(colision.length > 0){
+  //       setCollisions(colision);
+  //     }
 
-      setPlanes([...positionPlane.getPlanes()]);
-    }, 1000); // Atualiza a cada 100ms
+  //     setPlanes([...positionPlane.getPlanes()]);
+  //   }, 1000); // Atualiza a cada 100ms
 
-    return () => clearInterval(interval);
-  }, [positionPlane]);
+  //   return () => clearInterval(interval);
+  // }, [positionPlane]);
 
    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
