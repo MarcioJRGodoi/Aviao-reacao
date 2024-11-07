@@ -192,32 +192,41 @@ export class LogicService {
     return { tForX, tForY };
   }
 
-  checkCollision({ planes }: { planes: Plane[] }): Tracking[] {
+  checkCollision({ planes, collisionTime }: { planes: Plane[], collisionTime: number }): Tracking[] {
     const collisionPlanes: Tracking[] = [];
-
-    const [plane1, plane2] = planes;
-
-
-    const intersectionTime = this.calculateIntersectionTime(plane1, plane2);
-
-    if (!intersectionTime) {
-
-      collisionPlanes.push({ plane: [plane1, plane2], distance: 0, message: `Avioes ${plane1.id} e ${plane2.id} não colidem` });
-      return collisionPlanes
-
-    };
-
-    const { tForX, tForY } = intersectionTime;
-    const epsilon = 0.2;
-
-    // Verifica se os tempos são próximos o suficiente e positivos
-    if (Math.abs(tForX - tForY) < epsilon && tForX > 0) {
-      collisionPlanes.push({ plane: [plane1, plane2], distance: tForX, message: `Colisao entre Avioes ${plane1.id} e ${plane2.id} Tempo: ${tForX.toFixed(2)} Hrs` });
-      return collisionPlanes;
+    const epsilon = 0.2; // Tolerância para sincronização de tempo
+  
+    // Itera sobre todos os pares de aviões
+    for (let i = 0; i < planes.length; i++) {
+      for (let j = i + 1; j < planes.length; j++) {
+        const plane1 = planes[i];
+        const plane2 = planes[j];
+  
+        const intersectionTime = this.calculateIntersectionTime(plane1, plane2);
+  
+        if (!intersectionTime) {
+          collisionPlanes.push({
+            plane: [plane1, plane2],
+            distance: 0,
+            message: `Aviões ${plane1.id} e ${plane2.id} não colidem`,
+          });
+          continue; // Passa para o próximo par
+        }
+  
+        const { tForX, tForY } = intersectionTime;
+  
+        // Verifica se os tempos são próximos o suficiente e positivos
+        if (Math.abs(tForX - tForY) < epsilon && tForX > 0 && tForX <= collisionTime) {
+          collisionPlanes.push({
+            plane: [plane1, plane2],
+            distance: tForX,
+            message: `Colisão entre Aviões ${plane1.id} e ${plane2.id} em ${tForX.toFixed(2)} Hrs`,
+          });
+        }
+      }
     }
-
-    collisionPlanes.push({ plane: [plane1, plane2], distance: 0, message: `Avioes ${plane1.id} e ${plane2.id} não colidem` });
-    return collisionPlanes; // Nenhuma colisão
+  
+    return collisionPlanes;
   }
 
   distanceBetweenTwoPoints(x1: number, y1: number, x2: number, y2: number) {

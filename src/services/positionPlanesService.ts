@@ -25,7 +25,7 @@ public unsubscribeOnChange(callback: () => void): void {
 }
 
 public updatePlanePositions(): { x: number; y: number }[]  {
-  const movementFactor = 0.1; // Reduz o deslocamento em cada ciclo
+  const movementFactor = 0.008; // Reduz o deslocamento em cada ciclo
   
   // biome-ignore lint/complexity/noForEach: <explanation>
     this.planes.forEach((plane) => {

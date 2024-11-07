@@ -14,7 +14,7 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 }) => {
 	const [distanAirport, setDistanAirport] = useState<number | null>(null);
 	const [distanNearly, setDistanNearly] = useState<number | null>(null);
-	const [timeToColision, setTimeToColision] = useState<number | null>(null);
+	const [timeToColision, setTimeToColision] = useState<number>(0);
 
 	const airport = { x: 0, y: 0 };
 
@@ -47,21 +47,16 @@ const TrackingFunctionComponent: React.FC<TransformationFunctionProps> = ({
 	};
 
 	const handleColisionTime = () => {
-		const selectedPlanes = positionPlanes.getSelectedPlanes();
+		
+		const allPlanes = positionPlanes.getPlanes();
 
-		if (selectedPlanes.length < 2 || !timeToColision) {
-			alert(
-				"É preciso selecionar pelo menos 2 aviões e preencher o tempo mínimo!!",
-			);
-			return;
-		}
 
-		console.log("dsadas ", logic.checkCollision({ planes: selectedPlanes }));
+		console.log("dsadas ", logic.checkCollision({ planes: allPlanes, collisionTime: timeToColision }));
 
-		const distances = logic.checkCollision({ planes: selectedPlanes })
+		const distances = logic.checkCollision({ planes: allPlanes, collisionTime: timeToColision });
 
 		positionPlanes.addTracking({ tracking: distances });
-		setTimeToColision(null);
+		setTimeToColision(0);
 		positionPlanes.clearSelectedPlanes();
 	};
 

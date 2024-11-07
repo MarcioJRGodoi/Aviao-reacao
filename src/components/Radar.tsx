@@ -153,8 +153,8 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
     return () => clearInterval(interval);
   }, [positionPlane]);
 
-  // // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  // useEffect(() => {
+   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
 
   // //   //um atras do outro
   // //   // positionPlane.addPlane({ x: 0, y: 50, direction: 90, color: "red",angle: 0, id: 0, radius: 0, velocity: 5 });
@@ -171,7 +171,14 @@ const Radar: React.FC<RadarProps> = ({ positionPlane }) => {
   //       // colisao com posicoes bem diferentes +
   //       // positionPlane.addPlane({ x: 100, y: 0, direction: 90, color: "red", angle: 0, id: 0, radius: 0, velocity: 50 });  
   //       // positionPlane.addPlane({ x: 0, y: 0, direction: 45, color: "blue", angle: 0, id: 1, radius: 0, velocity: 50 });  
-  // },[])
+
+    //       // colisao com posicoes bem diferentes +
+        //  positionPlane.addPlane({ x: 0, y: 0, direction: 45, color: "red", angle: 0, id: 0, radius: 0, velocity: 200 });  
+        //  positionPlane.addPlane({ x: 40, y: 0, direction: 135, color: "blue", angle: 0, id: 1, radius: 0, velocity: 200 }); 
+
+        //  positionPlane.addPlane({ x: 20, y: 20, direction: 0, color: "red", angle: 0, id: 0, radius: 0, velocity: 1000 });  
+        //  positionPlane.addPlane({ x: 40, y: 0, direction: 90, color: "blue", angle: 0, id: 1, radius: 0, velocity: 990 }); 
+  },[])
 // comentario importante 
 
   const selectPlane = (plane: Plane) => {
